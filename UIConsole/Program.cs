@@ -15,7 +15,7 @@ namespace UIConsole
             SceneManager.Instance.AddScene(new Menu());
             while (!SceneManager.Instance.SceneListIsEmpty())
             {
-                FPS.ShowFramesPerSecond();
+                ///FPS.ShowFramesPerSecond();
                 SceneManager.Instance.Draw();
                 SceneManager.Instance.Update();               
             }

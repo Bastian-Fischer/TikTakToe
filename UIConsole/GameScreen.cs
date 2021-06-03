@@ -12,41 +12,41 @@ namespace UIConsole
 
         //UI
         //O
-        private ConsoleColor mPlayerAColor; 
-        private ConsoleColor mPlayerABackColor;
+        private readonly ConsoleColor mPlayerAColor; 
+        private readonly ConsoleColor mPlayerABackColor;
 
         //X
-        private ConsoleColor mPlayerBColor;
-        private ConsoleColor mPlayerBBackColor;
+        private readonly ConsoleColor mPlayerBColor;
+        private readonly ConsoleColor mPlayerBBackColor;
 
-        private ConsoleColor mBorderBackColor;
-        private ConsoleColor mBorderColor;
+        private readonly ConsoleColor mBorderBackColor;
+        private readonly ConsoleColor mBorderColor;
 
-        private ConsoleColor mBoardColor;
-        private ConsoleColor mBoardBackColor;
-        private int mFieldStartPosY;
-        private int mFieldStartPosX;
-        private int mFieldSizeY;
-        private int mFieldSizeX;
-        private int mGameSizeY;
-        private int mGameSizeX;
+        private readonly ConsoleColor mBoardColor;
+        private readonly ConsoleColor mBoardBackColor;
+        private readonly int mFieldStartPosY;
+        private readonly int mFieldStartPosX;
+        private readonly int mFieldSizeY;
+        private readonly int mFieldSizeX;
+        private readonly int mGameSizeY;
+        private readonly int mGameSizeX;
                        
-        private char[,] mFieldX = LoadAs.CharMultidimensionalArr("TTTIMG/FieldB.txt");
-        private char[,] mFieldO = LoadAs.CharMultidimensionalArr("TTTIMG/FieldA.txt");   
-        private char[,] mFieldE = LoadAs.CharMultidimensionalArr("TTTIMG/FieldE.txt");
-        private char[] mBoarderList = LoadAs.CharArrFirstOneFromLine("TTTIMG/Boarder.txt");
+        private readonly char[,] mFieldX = LoadAs.CharMultidimensionalArr("TTTIMG/FieldB.txt");
+        private readonly char[,] mFieldO = LoadAs.CharMultidimensionalArr("TTTIMG/FieldA.txt");   
+        private readonly char[,] mFieldE = LoadAs.CharMultidimensionalArr("TTTIMG/FieldE.txt");
+        private readonly char[] mBoarderList = LoadAs.CharArrFirstOneFromLine("TTTIMG/Boarder.txt");
 
-        private char mBoarderLT;//'┌'
-        private char mBoarderTC;//'┬'
-        private char mBaorderTR;//'┐'
-        private char mBoarderRC;//'┤'
-        private char mBoarderRB;//'┘'
-        private char mBoarderBC;//'┴'
-        private char mBoarderBL;//'└'
-        private char mBoarderLC;//'├'
-        private char mBoarderCR;//'┼'
-        private char mBoarderVE;//'─'
-        private char mBoarderHO;//'│'
+        private readonly char mBoarderLT;//'┌'
+        private readonly char mBoarderTC;//'┬'
+        private readonly char mBaorderTR;//'┐'
+        private readonly char mBoarderRC;//'┤'
+        private readonly char mBoarderRB;//'┘'
+        private readonly char mBoarderBC;//'┴'
+        private readonly char mBoarderBL;//'└'
+        private readonly char mBoarderLC;//'├'
+        private readonly char mBoarderCR;//'┼'
+        private readonly char mBoarderVE;//'─'
+        private readonly char mBoarderHO;//'│'
 
         private ConsoleColor mCurrentBackgroundColor;
         private int currentY;

@@ -9,13 +9,13 @@ namespace UIConsole
     class GameOver : Scene
     {
 
-        private GameScreen mGame;
-        private TTTLogic.Logic GameLogic;
-        private string[] winner = LoadAs.StringArr("TTTIMG/Winner.txt");
-        private string[] winnerX  = LoadAs.StringArr("TTTIMG/WinB.txt");
-        private string[] winnerO = LoadAs.StringArr("TTTIMG/WinA.txt");
-        private string[] line = LoadAs.StringArr("TTTIMG/WinD.txt");
-        private string[] draw = LoadAs.StringArr("TTTIMG/Draw.txt");
+        private readonly GameScreen mGame;
+        private readonly TTTLogic.Logic GameLogic;
+        private readonly string[] winner = LoadAs.StringArr("TTTIMG/Winner.txt");
+        private readonly string[] winnerX  = LoadAs.StringArr("TTTIMG/WinB.txt");
+        private readonly string[] winnerO = LoadAs.StringArr("TTTIMG/WinA.txt");
+        private readonly string[] line = LoadAs.StringArr("TTTIMG/WinD.txt");
+        private readonly string[] draw = LoadAs.StringArr("TTTIMG/Draw.txt");
 
         public GameOver(TTTLogic.Logic _GameLogic, GameScreen _GameScreen ) 
         {
@@ -53,7 +53,7 @@ namespace UIConsole
                 switch ((int)GameLogic.GetScoreList()[counter]) 
                 {
                     case (int)TTTLogic.TurnResult.WinX:
-                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter+1) + "  -  Winner: X", ConsoleColor.Red , ConsoleColor.Black));
+                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: X", ConsoleColor.Red , ConsoleColor.Black));
                         break;
                     case (int)TTTLogic.TurnResult.WinO:
                         mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: O", ConsoleColor.Blue, ConsoleColor.Black));

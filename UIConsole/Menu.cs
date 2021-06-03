@@ -14,8 +14,8 @@ namespace UIConsole
 
             //mLabelList.Add(new Text(10, 1, "logo.txt"));
             mButtonList.Add(new Button(10, Positioning.center, "Start New Game",() => SceneManager.Instance.AddScene(new GameScreen(10))));
-            mButtonList.Add(new Button(12, Positioning.center, "Credits", () => SceneManager.Instance.RemoveScene(this)));
-            mButtonList.Add(new Button(14, Positioning.center, "Quit", () => SceneManager.Instance.RemoveScene(this)));
+            //mButtonList.Add(new Button(12, Positioning.center, "Credits", () => SceneManager.Instance.RemoveScene(this)));
+            mButtonList.Add(new Button(12, Positioning.center, "Quit", () => SceneManager.Instance.RemoveScene(this)));
 
             mButtonList[mActiveButton].IsSelected = true;
         }
