@@ -7,6 +7,10 @@ namespace UIConsole
     {   
         static void Main(string[] args)
         {
+            //Load Config
+            
+
+
             FramesPerSecond FPS = new(0,0,ConsoleColor.White, ConsoleColor.Black);
             Console.CursorVisible = false;
             Console.SetWindowSize(1 , 1 );

@@ -10,8 +10,8 @@ namespace UIConsole
     {
 
         //---System
-        public int windowSizeY;
-        public int windowSizeX;
+        public int          windowSizeY;
+        public int          windowSizeX;
         public ConsoleColor systemColorFront;
         public ConsoleColor systemColorBack;
 
@@ -20,12 +20,17 @@ namespace UIConsole
         //PlayerAMark
         public ConsoleColor playerAMarkColorBack;
         public ConsoleColor playerAMarkColorFront;
-        public string playerAMarkURL;
+        public string       playerAMarkURL;
         //PlayerBMark
         public ConsoleColor playerBMarkColorBack;
         public ConsoleColor playerBMarkColorFront;
-        public string playerBMarkURL;
-        public string boarderURL;
+        public string       playerBMarkURL;
+        //EmptyField
+        public ConsoleColor EmptyMarkColorBack;
+        public ConsoleColor EmptyMarkColorFront;
+        public string       EmptyMarkURL;
+
+        public string       boarderURL;
         public ConsoleColor fieldColorFront;
         public ConsoleColor fieldColorBack;
 
@@ -34,9 +39,12 @@ namespace UIConsole
         public ConsoleColor menuColorBack;
         public ConsoleColor menuColorActive;
         //---GameOver
-        public string gameOverWinnerURL;
-        public string gameOverDrawURL;
-        public string gameOverWinAURL;
-        public string gameOverWinBURL;
+        public string       gameOverWinnerURL;
+        public string       gameOverDrawURL;
+        public string       gameOverWinAURL;
+        public string       gameOverWinBURL;
+        public string       gameOverWinDURL;
     }
+
+    
 }

@@ -8,6 +8,7 @@ namespace UIConsole
 {
     class FramesPerSecond
     {
+
         private DateTime mTickTime;
         private DateTime mLastTickTime;
         private long mTicksCounter;
