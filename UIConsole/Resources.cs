@@ -8,18 +8,18 @@ namespace UIConsole
 {
     class Resources
     {
-        public static Config mainConfig = CreateDefault();
+        private static Config mainConfig = CreateDefault();
 
-        public static string[]  winner      ;
-        public static string[]  winnerX     ;
-        public static string[]  winnerO     ;
-        public static string[]  line        ;
-        public static string[]  draw        ;
-                                            
-        public static char[,]   FieldX      ;
-        public static char[,]   FieldO      ;
-        public static char[,]   FieldE      ;
-        private static char[]   mBoarderList;
+        public static string[] winner;
+        public static string[] winX;
+        public static string[] winO;
+        public static string[] winD;
+        public static string[] draw;
+
+        public static char[,] FieldX;
+        public static char[,] FieldO;
+        public static char[,] FieldE;
+        private static char[] mBoarderList;
 
         public static char boarderLT;//'┌'
         public static char boarderTC;//'┬'
@@ -32,13 +32,77 @@ namespace UIConsole
         public static char boarderCR;//'┼'
         public static char boarderVE;//'─'
         public static char boarderHO;//'│'
+                                     //Board
+        public static ConsoleColor BoardColorFront
+        {
+            get { return mainConfig.boardColorFront; }
+        }
+        public static ConsoleColor BoardColorBack
+        {
+            get { return mainConfig.boardColorBack; }
+        }
+        //Player A
+        public static ConsoleColor PlayerAColorFront
+        {
+            get{ return mainConfig.playerAMarkColorFront; }
+        }
+        public static ConsoleColor PlayerAColorBack
+        {
+            get { return mainConfig.playerAMarkColorBack; }
+        }
+        //Player B
+        public static ConsoleColor PlayerBColorFront
+        {
+            get { return mainConfig.playerBMarkColorFront; }
+        }
+        public static ConsoleColor PlayerBColorBack
+        {
+            get { return mainConfig.playerBMarkColorBack; }
+        }
+        //Empty Field
+        public static ConsoleColor EmptyColorFront
+        {
+            get { return mainConfig.EmptyMarkColorFront; }
+        }
+        public static ConsoleColor EmptyColorBack
+        {
+            get { return mainConfig.EmptyMarkColorBack; }
+        }
+        //System
+        public static ConsoleColor SystemColorFront
+        {
+            get { return mainConfig.systemColorFront; }
+        }
+        public static ConsoleColor SystemColorAcent
+        {
+            get { return mainConfig.systemColorAcent; }
+        }
+        public static ConsoleColor SystemColorBack
+        {
+            get { return mainConfig.systemColorBack; }
+        }
+        //Menu
+        public static ConsoleColor MenuColorFront
+        {
+            get { return mainConfig.menuColorFront; }
+        }
+        public static ConsoleColor MenuColorBack
+        {
+            get { return mainConfig.menuColorBack; }
+        }
+        public static ConsoleColor MenuColorActive
+        {
+            get { return mainConfig.menuColorActive; }
+        }
 
-        public void SetValues() 
+
+
+        public static void SetValues() 
         {
             winner = LoadAs.StringArr(mainConfig.gameOverWinnerURL);
-            winnerX = LoadAs.StringArr(mainConfig.gameOverWinBURL);
-            winnerO = LoadAs.StringArr(mainConfig.gameOverWinAURL);
-            line = LoadAs.StringArr(mainConfig.gameOverWinDURL);
+            winX = LoadAs.StringArr(mainConfig.gameOverWinBURL);
+            winO = LoadAs.StringArr(mainConfig.gameOverWinAURL);
+            winD = LoadAs.StringArr(mainConfig.gameOverWinDURL);
             draw = LoadAs.StringArr(mainConfig.gameOverDrawURL);
 
             FieldX = LoadAs.CharMultidimensionalArr(mainConfig.playerBMarkURL);
@@ -67,27 +131,28 @@ namespace UIConsole
             _return.windowSizeY = 50;
             _return.windowSizeX = 90;
             _return.systemColorFront = ConsoleColor.White;
+            _return.systemColorAcent = ConsoleColor.Gray;
             _return.systemColorBack = ConsoleColor.Black;
 
-            _return.playerAMarkColorBack = ConsoleColor.Blue;
-            _return.playerAMarkColorFront = ConsoleColor.DarkBlue;
+            _return.playerAMarkColorFront = ConsoleColor.Blue;
+            _return.playerAMarkColorBack = ConsoleColor.DarkBlue;
             _return.playerAMarkURL = dirIMG + "FieldA.txt";
 
-            _return.playerBMarkColorBack = ConsoleColor.Red;
-            _return.playerBMarkColorFront = ConsoleColor.DarkRed;
+            _return.playerBMarkColorFront = ConsoleColor.Red;
+            _return.playerBMarkColorBack = ConsoleColor.DarkRed;
             _return.playerBMarkURL = dirIMG + "FieldB.txt";
 
-            _return.EmptyMarkColorBack = ConsoleColor.Red;
-            _return.EmptyMarkColorFront = ConsoleColor.DarkGray;
+            _return.EmptyMarkColorFront = ConsoleColor.Gray;
+            _return.EmptyMarkColorBack = ConsoleColor.DarkGray;
             _return.EmptyMarkURL = dirIMG + "FieldE.txt";
 
             _return.boarderURL = dirIMG + "Boarder.txt"; ;
-            _return.fieldColorFront = ConsoleColor.White;
-            _return.fieldColorBack = ConsoleColor.DarkGray;
+            _return.boardColorFront = ConsoleColor.White;
+            _return.boardColorBack = ConsoleColor.DarkGray;
             //Menu
             _return.menuColorFront = ConsoleColor.White;
             _return.menuColorBack = ConsoleColor.Black;
-            _return.menuColorActive = ConsoleColor.Cyan;
+            _return.menuColorActive = ConsoleColor.DarkBlue;
 
 
             _return.gameOverWinnerURL = dirIMG + "Winner.txt";

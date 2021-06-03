@@ -8,11 +8,11 @@ namespace UIConsole
 {
     struct Config
     {
-
         //---System
         public int          windowSizeY;
         public int          windowSizeX;
         public ConsoleColor systemColorFront;
+        public ConsoleColor systemColorAcent;
         public ConsoleColor systemColorBack;
 
 
@@ -31,8 +31,8 @@ namespace UIConsole
         public string       EmptyMarkURL;
 
         public string       boarderURL;
-        public ConsoleColor fieldColorFront;
-        public ConsoleColor fieldColorBack;
+        public ConsoleColor boardColorFront;
+        public ConsoleColor boardColorBack;
 
         //---Menu
         public ConsoleColor menuColorFront;

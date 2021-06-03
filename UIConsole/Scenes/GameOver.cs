@@ -8,14 +8,10 @@ namespace UIConsole
 {
     class GameOver : Scene
     {
-
+        
         private readonly GameScreen mGame;
         private readonly TTTLogic.Logic GameLogic;
-        private readonly string[] winner = LoadAs.StringArr("TTTIMG/Winner.txt");
-        private readonly string[] winnerX  = LoadAs.StringArr("TTTIMG/WinB.txt");
-        private readonly string[] winnerO = LoadAs.StringArr("TTTIMG/WinA.txt");
-        private readonly string[] line = LoadAs.StringArr("TTTIMG/WinD.txt");
-        private readonly string[] draw = LoadAs.StringArr("TTTIMG/Draw.txt");
+
 
         public GameOver(TTTLogic.Logic _GameLogic, GameScreen _GameScreen ) 
         {
@@ -29,19 +25,19 @@ namespace UIConsole
             switch ((int)GameLogic.GameState)
             {
                 case (int)TTTLogic.TurnResult.WinX:
-                    mLabelList.Add(new Label(1, Positioning.left, winnerX, ConsoleColor.Red, ConsoleColor.Black));
-                    mLabelList.Add(new Label(1, Positioning.center, winner, ConsoleColor.Red, ConsoleColor.Black));
-                    mLabelList.Add(new Label(1, Positioning.right, winnerX, ConsoleColor.Red, ConsoleColor.Black));
+                    mLabelList.Add(new Label(1, Positioning.left, Resources.winX, Resources.PlayerBColorBack, Resources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.center, Resources.winner, Resources.PlayerBColorFront, Resources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.right, Resources.winX, Resources.PlayerBColorBack, Resources.SystemColorBack));
                     break;
                 case (int)TTTLogic.TurnResult.WinO:
-                    mLabelList.Add(new Label(1, Positioning.left, winnerO, ConsoleColor.Blue, ConsoleColor.Black));
-                    mLabelList.Add(new Label(1, Positioning.center, winner, ConsoleColor.Blue, ConsoleColor.Black));
-                    mLabelList.Add(new Label(1, Positioning.right, winnerO, ConsoleColor.Blue, ConsoleColor.Black));
+                    mLabelList.Add(new Label(1, Positioning.left, Resources.winO, Resources.PlayerAColorBack, Resources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.center, Resources.winner, Resources.PlayerAColorFront, Resources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.right, Resources.winO, Resources.PlayerAColorBack, Resources.SystemColorBack));
                     break;
                 case (int)TTTLogic.TurnResult.Draw:
-                    mLabelList.Add(new Label(1, Positioning.left, line, ConsoleColor.White, ConsoleColor.Black));
-                    mLabelList.Add(new Label(1, Positioning.center, draw, ConsoleColor.White, ConsoleColor.Black));
-                    mLabelList.Add(new Label(1, Positioning.right, line, ConsoleColor.White, ConsoleColor.Black));
+                    mLabelList.Add(new Label(1, Positioning.left, Resources.winD, Resources.SystemColorAcent, Resources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.center, Resources.draw, Resources.SystemColorFront, Resources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.right, Resources.winD, Resources.SystemColorAcent, Resources.SystemColorBack));
                     break;               
             }
             int winnerCounterY = 15;
@@ -53,13 +49,13 @@ namespace UIConsole
                 switch ((int)GameLogic.GetScoreList()[counter]) 
                 {
                     case (int)TTTLogic.TurnResult.WinX:
-                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: X", ConsoleColor.Red , ConsoleColor.Black));
+                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: X", Resources.PlayerBColorFront, Resources.SystemColorBack));
                         break;
                     case (int)TTTLogic.TurnResult.WinO:
-                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: O", ConsoleColor.Blue, ConsoleColor.Black));
+                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: O", Resources.PlayerAColorFront, Resources.SystemColorBack));
                         break;
                     case (int)TTTLogic.TurnResult.Draw:
-                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -    DRAW   ", ConsoleColor.White, ConsoleColor.Black));
+                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -       DRAW", Resources.SystemColorFront, Resources.SystemColorBack));
                         break;
                 }
             }

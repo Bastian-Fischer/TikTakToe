@@ -8,7 +8,7 @@ namespace UIConsole
         static void Main(string[] args)
         {
             //Load Config
-            
+            Resources.SetValues();
 
 
             FramesPerSecond FPS = new(0,0,ConsoleColor.White, ConsoleColor.Black);

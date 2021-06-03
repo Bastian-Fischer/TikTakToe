@@ -18,28 +18,22 @@ namespace UIConsole
             int _posY,
             int _posX,
             string _text,
-            Action _mCommand,
-            ConsoleColor _mColorSelected = ConsoleColor.DarkBlue,
-            ConsoleColor _mColorNotSelected = ConsoleColor.Black,
-            ConsoleColor _back = ConsoleColor.Black
-            ) : base(_posY, _posX, _text, _mColorNotSelected, _back)
+            Action _mCommand
+            ) : base(_posY, _posX, _text, Resources.MenuColorFront, Resources.MenuColorBack)
         {
-            mColorNotSelected = _mColorNotSelected;
-            mColorSelected = _mColorSelected;
+            mColorNotSelected = Resources.MenuColorBack;
+            mColorSelected = Resources.MenuColorActive;
             mCommand = _mCommand;
         }
         public Button(
             int _posY,
             Positioning _pos,
             string _text,
-            Action _mCommand,
-            ConsoleColor _mColorSelected = ConsoleColor.DarkBlue,
-            ConsoleColor _mColorNotSelected = ConsoleColor.Black,
-            ConsoleColor _back = ConsoleColor.Black
-            ) : base(_posY, _pos, _text, _mColorNotSelected, _back)
+            Action _mCommand
+            ) : base(_posY, _pos, _text, Resources.MenuColorFront, Resources.MenuColorBack)
         {
-            mColorNotSelected = _mColorNotSelected;
-            mColorSelected = _mColorSelected;
+            mColorNotSelected = Resources.MenuColorBack;
+            mColorSelected = Resources.MenuColorActive;
             mCommand = _mCommand;
         }
         public void Execute()
