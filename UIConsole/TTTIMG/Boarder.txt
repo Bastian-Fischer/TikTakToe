@@ -1,0 +1,11 @@
+┌ LeftTop
+┬ TopCross
+┐ TopRight
+┤ RightCross
+┘ RightBottom
+┴ BottomCross
+└ BottomLeft
+├ LeftCross
+┼ Corss
+─ Horizontal 
+│ Upright 

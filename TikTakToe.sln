@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TTTLogic", "Logic\TTTLogic.csproj", "{8683E2D3-C79F-415D-A975-8D00D605DDF2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UIConsole", "UIConsole\UIConsole.csproj", "{C2A4D55F-BF5E-4417-8ECE-8A730F05A5BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TikTakToeTest", "TikTakToeTest\TikTakToeTest.csproj", "{7BDFE836-1CB5-4CC7-A017-9C93F88875FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8683E2D3-C79F-415D-A975-8D00D605DDF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8683E2D3-C79F-415D-A975-8D00D605DDF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8683E2D3-C79F-415D-A975-8D00D605DDF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8683E2D3-C79F-415D-A975-8D00D605DDF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A4D55F-BF5E-4417-8ECE-8A730F05A5BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A4D55F-BF5E-4417-8ECE-8A730F05A5BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A4D55F-BF5E-4417-8ECE-8A730F05A5BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A4D55F-BF5E-4417-8ECE-8A730F05A5BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BDFE836-1CB5-4CC7-A017-9C93F88875FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BDFE836-1CB5-4CC7-A017-9C93F88875FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BDFE836-1CB5-4CC7-A017-9C93F88875FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BDFE836-1CB5-4CC7-A017-9C93F88875FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06152335-6F49-410A-B991-52002F8A9731}
+	EndGlobalSection
+EndGlobal
