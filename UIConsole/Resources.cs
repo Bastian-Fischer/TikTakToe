@@ -1,103 +1,122 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace UIConsole
 {
     class Resources
     {
-        private static Config mainConfig = CreateDefault();
+        private static Resources mMainResources;
+        public static Resources MainResources
+        {
+            get
+            {
+                if (mMainResources is null) // wenn noch kein Objekt erstellt wurde holen wir das nach. "Lazy Initialization"
+                    mMainResources = new(); // das einzige new für den SceneManager das es je geben wird
+                return mMainResources;
+            }
+        }
+        public Config mainConfig;
 
-        public static string[] winner;
-        public static string[] winX;
-        public static string[] winO;
-        public static string[] winD;
-        public static string[] draw;
+        
 
-        public static char[,] FieldX;
-        public static char[,] FieldO;
-        public static char[,] FieldE;
-        private static char[] mBoarderList;
+        public string[] winner;
+        public string[] winX;
+        public string[] winO;
+        public string[] winD;
+        public string[] draw;
 
-        public static char boarderLT;//'┌'
-        public static char boarderTC;//'┬'
-        public static char baorderTR;//'┐'
-        public static char boarderRC;//'┤'
-        public static char boarderRB;//'┘'
-        public static char boarderBC;//'┴'
-        public static char boarderBL;//'└'
-        public static char boarderLC;//'├'
-        public static char boarderCR;//'┼'
-        public static char boarderVE;//'─'
-        public static char boarderHO;//'│'
+        public char[,] FieldX;
+        public char[,] FieldO;
+        public char[,] FieldE;
+        private char[] mBoarderList;
+
+        public char boarderLT;//'┌'
+        public char boarderTC;//'┬'
+        public char baorderTR;//'┐'
+        public char boarderRC;//'┤'
+        public char boarderRB;//'┘'
+        public char boarderBC;//'┴'
+        public char boarderBL;//'└'
+        public char boarderLC;//'├'
+        public char boarderCR;//'┼'
+        public char boarderVE;//'─'
+        public char boarderHO;//'│'
+        private Resources()//nur für Singleton
+        { 
+            mainConfig = CreateDefault();
+            SetValues();
+        }
                                      //Board
-        public static ConsoleColor BoardColorFront
+        public ConsoleColor BoardColorFront
         {
             get { return mainConfig.boardColorFront; }
         }
-        public static ConsoleColor BoardColorBack
+        public ConsoleColor BoardColorBack
         {
             get { return mainConfig.boardColorBack; }
         }
         //Player A
-        public static ConsoleColor PlayerAColorFront
+        public ConsoleColor PlayerAColorFront
         {
             get{ return mainConfig.playerAMarkColorFront; }
         }
-        public static ConsoleColor PlayerAColorBack
+        public ConsoleColor PlayerAColorBack
         {
             get { return mainConfig.playerAMarkColorBack; }
         }
         //Player B
-        public static ConsoleColor PlayerBColorFront
+        public ConsoleColor PlayerBColorFront
         {
             get { return mainConfig.playerBMarkColorFront; }
         }
-        public static ConsoleColor PlayerBColorBack
+        public ConsoleColor PlayerBColorBack
         {
             get { return mainConfig.playerBMarkColorBack; }
         }
         //Empty Field
-        public static ConsoleColor EmptyColorFront
+        public ConsoleColor EmptyColorFront
         {
             get { return mainConfig.EmptyMarkColorFront; }
         }
-        public static ConsoleColor EmptyColorBack
+        public ConsoleColor EmptyColorBack
         {
             get { return mainConfig.EmptyMarkColorBack; }
         }
         //System
-        public static ConsoleColor SystemColorFront
+        public ConsoleColor SystemColorFront
         {
             get { return mainConfig.systemColorFront; }
         }
-        public static ConsoleColor SystemColorAcent
+        public ConsoleColor SystemColorAcent
         {
             get { return mainConfig.systemColorAcent; }
         }
-        public static ConsoleColor SystemColorBack
+        public ConsoleColor SystemColorBack
         {
             get { return mainConfig.systemColorBack; }
         }
         //Menu
-        public static ConsoleColor MenuColorFront
+        public ConsoleColor MenuColorFront
         {
             get { return mainConfig.menuColorFront; }
         }
-        public static ConsoleColor MenuColorBack
+        public ConsoleColor MenuColorBack
         {
             get { return mainConfig.menuColorBack; }
         }
-        public static ConsoleColor MenuColorActive
+        public ConsoleColor MenuColorActive
         {
             get { return mainConfig.menuColorActive; }
         }
 
 
 
-        public static void SetValues() 
+        public void SetValues() 
         {
             winner = LoadAs.StringArr(mainConfig.gameOverWinnerURL);
             winX = LoadAs.StringArr(mainConfig.gameOverWinBURL);
@@ -110,6 +129,7 @@ namespace UIConsole
             FieldE = LoadAs.CharMultidimensionalArr(mainConfig.EmptyMarkURL);
             mBoarderList = LoadAs.CharArrFirstOneFromLine(mainConfig.boarderURL);
 
+            //todo replace variables with enum access to list
             boarderLT = mBoarderList[0];//'┌
             boarderTC = mBoarderList[1];//'┬
             baorderTR = mBoarderList[2];//'┐
@@ -124,7 +144,7 @@ namespace UIConsole
 
         }
 
-        public static Config CreateDefault()
+        public Config CreateDefault()
         {
             Config _return;
             string dirIMG = "TTTIMG/";
@@ -164,13 +184,23 @@ namespace UIConsole
             return _return;
         }
 
-        private void SaveConfig(Config _config, string _name)
+        public void SaveConfigJson(Config _config, string _name, string _dir = "System/")
         {
-            //TODO json Serialiser
-
-
-
-
+            //TODO json Serialiser, idealerweise mit StreamWriter
+            string jsonString = JsonSerializer.Serialize(_config);
+            File.WriteAllText(_dir+ _name+".json", jsonString);
         }
+
+        public Config LoadConfigJson(string _dir) {
+
+            var options = new JsonSerializerOptions
+            {
+                IncludeFields = true
+            };
+            string jsonString =  File.ReadAllText(_dir); //todo StreamReader währe cooler
+            Config _return = JsonSerializer.Deserialize<Config>(jsonString, options);
+            return _return;
+        }
+
     }
 }

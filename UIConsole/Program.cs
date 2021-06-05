@@ -5,12 +5,11 @@ namespace UIConsole
 {
     class Program
     {   
-        static void Main(string[] args)
+        static void Main(string[] args) //todo remove unused parameter
         {
-            //Load Config
-            Resources.SetValues();
 
-
+            //Resources.SaveConfigJson(Resources.mainConfig, "main");
+            //Resources.mainConfig.
             FramesPerSecond FPS = new(0,0,ConsoleColor.White, ConsoleColor.Black);
             Console.CursorVisible = false;
             Console.SetWindowSize(1 , 1 );

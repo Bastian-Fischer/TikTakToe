@@ -4,6 +4,8 @@ namespace UIConsole
 {
     abstract class Scene
     {
+ 
+        protected Resources MainResources = Resources.MainResources;
         protected List<Label> mLabelList;
         protected List<Button> mButtonList;
         protected byte mActiveButton;

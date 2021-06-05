@@ -8,36 +8,37 @@ namespace UIConsole
 {
     class GameOver : Scene
     {
-        
-        private readonly GameScreen mGame;
-        private readonly TTTLogic.Logic GameLogic;
+        protected readonly GameScreen mGame;
+        protected readonly TTTLogic.Logic GameLogic;
+        protected TTTLogic.TurnResult mTurnWinner;
 
-
-        public GameOver(TTTLogic.Logic _GameLogic, GameScreen _GameScreen ) 
+        public GameOver(TTTLogic.Logic _GameLogic, TTTLogic.TurnResult _mTurnWinner, GameScreen _GameScreen ) 
         {
             Console.Clear();
             mActiveButton = 1;         
             mButtonList.Add(new Button(10 , Positioning.center, "BACK TO MENU", ()=>ExitToMenu()));
             mButtonList.Add(new Button(11, Positioning.center, "NEXT GAME", () => ResetGame()));
             mButtonList[mActiveButton].IsSelected = true;
+            mTurnWinner = _mTurnWinner;
             mGame = _GameScreen;
             GameLogic = _GameLogic;
-            switch ((int)GameLogic.GameState)
+            int listLength = GameLogic.GetScoreList().Count;
+            switch (mTurnWinner)
             {
-                case (int)TTTLogic.TurnResult.WinX:
-                    mLabelList.Add(new Label(1, Positioning.left, Resources.winX, Resources.PlayerBColorBack, Resources.SystemColorBack));
-                    mLabelList.Add(new Label(1, Positioning.center, Resources.winner, Resources.PlayerBColorFront, Resources.SystemColorBack));
-                    mLabelList.Add(new Label(1, Positioning.right, Resources.winX, Resources.PlayerBColorBack, Resources.SystemColorBack));
+                case TTTLogic.TurnResult.WinX:
+                    mLabelList.Add(new Label(1, Positioning.left, MainResources.winX, MainResources.PlayerBColorBack, MainResources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.center, MainResources.winner, MainResources.PlayerBColorFront, MainResources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.right, MainResources.winX, MainResources.PlayerBColorBack, MainResources.SystemColorBack));
                     break;
-                case (int)TTTLogic.TurnResult.WinO:
-                    mLabelList.Add(new Label(1, Positioning.left, Resources.winO, Resources.PlayerAColorBack, Resources.SystemColorBack));
-                    mLabelList.Add(new Label(1, Positioning.center, Resources.winner, Resources.PlayerAColorFront, Resources.SystemColorBack));
-                    mLabelList.Add(new Label(1, Positioning.right, Resources.winO, Resources.PlayerAColorBack, Resources.SystemColorBack));
+                case TTTLogic.TurnResult.WinO:
+                    mLabelList.Add(new Label(1, Positioning.left, MainResources.winO, MainResources.PlayerAColorBack, MainResources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.center, MainResources.winner, MainResources.PlayerAColorFront, MainResources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.right, MainResources.winO, MainResources.PlayerAColorBack, MainResources.SystemColorBack));
                     break;
-                case (int)TTTLogic.TurnResult.Draw:
-                    mLabelList.Add(new Label(1, Positioning.left, Resources.winD, Resources.SystemColorAcent, Resources.SystemColorBack));
-                    mLabelList.Add(new Label(1, Positioning.center, Resources.draw, Resources.SystemColorFront, Resources.SystemColorBack));
-                    mLabelList.Add(new Label(1, Positioning.right, Resources.winD, Resources.SystemColorAcent, Resources.SystemColorBack));
+                case TTTLogic.TurnResult.Draw:
+                    mLabelList.Add(new Label(1, Positioning.left, MainResources.winD, MainResources.SystemColorAcent, MainResources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.center, MainResources.draw, MainResources.SystemColorFront, MainResources.SystemColorBack));
+                    mLabelList.Add(new Label(1, Positioning.right, MainResources.winD, MainResources.SystemColorAcent, MainResources.SystemColorBack));
                     break;               
             }
             int winnerCounterY = 15;
@@ -49,13 +50,13 @@ namespace UIConsole
                 switch ((int)GameLogic.GetScoreList()[counter]) 
                 {
                     case (int)TTTLogic.TurnResult.WinX:
-                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: X", Resources.PlayerBColorFront, Resources.SystemColorBack));
+                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: X", MainResources.PlayerBColorFront, MainResources.SystemColorBack));
                         break;
                     case (int)TTTLogic.TurnResult.WinO:
-                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: O", Resources.PlayerAColorFront, Resources.SystemColorBack));
+                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -  Winner: O", MainResources.PlayerAColorFront, MainResources.SystemColorBack));
                         break;
                     case (int)TTTLogic.TurnResult.Draw:
-                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -       DRAW", Resources.SystemColorFront, Resources.SystemColorBack));
+                        mLabelList.Add(new Label(winnerCounterY++, Positioning.center, "GAME "+ (counter + 1) + "  -       DRAW", MainResources.SystemColorFront, MainResources.SystemColorBack));
                         break;
                 }
             }

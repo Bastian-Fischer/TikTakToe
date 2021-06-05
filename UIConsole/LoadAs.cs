@@ -24,26 +24,18 @@ namespace UIConsole
             foreach (var item in stringARR)
             {
                 height++;
-               int lengthX = item.Length;
+                int lengthX = item.Length;
                 if (width < lengthX) width = lengthX;
             }
             _return =new char[height, width];
             for (int y = 0; y < height; y++)
-            {
                 for (int x = 0; x < width; x++)
-                {
                     _return[y,x] = ' ';
-                }
-            }
-            int countY = 0;
-            foreach (var item in stringARR)
-            {  
-                for (int i = 0; i < item.Length; i++)
-                {
-                    _return[countY, i] = item[i];
-                }
-                countY++;
-            }
+
+            for (int counterY = 0; counterY < stringARR.Length; counterY++)
+                for (int counterX = 0; counterX < stringARR[counterY].Length; counterX++)
+                    _return[counterY, counterX] = stringARR[counterY][counterX];
+
             return _return;
         }
         public static char[] CharArrFirstOneFromLine(string _url) 
@@ -51,13 +43,10 @@ namespace UIConsole
             char[] _return;
             string[] stringARR = File.ReadAllLines(_url);
             _return = new char[stringARR.Length];
-            int counter = 0;
-            foreach (var item in stringARR)
-            {
-                _return[counter] = item[0];
-                counter++;
-            }
-                
+
+            for  (int counter = 0; counter < stringARR.Length; counter++)
+                _return[counter] = stringARR[counter][0];
+ 
             return _return;
         }
     }

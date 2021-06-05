@@ -5,6 +5,7 @@ namespace UIConsole
     //todo finish label
     class Label
     {
+        protected Resources MainResources = Resources.MainResources;
         protected readonly string[] mText;
         protected readonly int mPosY;
         protected readonly int mPosX;
@@ -74,12 +75,11 @@ namespace UIConsole
             int posY = mPosY;
             foreach (var item in mText)
             {
-                Console.ResetColor();
                 Console.SetCursorPosition(mPosX, posY++);
                 Console.ForegroundColor = front;
                 Console.BackgroundColor = back;
                 Console.WriteLine(item);
-                Console.ResetColor();
+                Console.ResetColor(); //todo versuchen auszubauen. jedes element stellt immer seine farben vor dem zeichnen ein
             }
            
         }

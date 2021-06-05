@@ -1,21 +1,22 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 
 namespace TTTLogic
 {
-    
+
     public class Logic
     {
         public const int AxisY = 0;
         public const int AxisX = 1;
 
-        private bool mCurrentPlayer; 
+        private bool mCurrentPlayer;
         private TurnResult gameState;
         public bool GetCurrentPlayer() //Forgegeben /Struktur
         {
             return mCurrentPlayer;
         }
-        public TurnResult GameState 
+        public TurnResult GameState
         {
             get { return gameState; }
         }
@@ -24,20 +25,21 @@ namespace TTTLogic
         {
             return scoreList;
         }
-        private readonly Board[,] mGameBoard; 
-        public Board[,] GetGameBoard() 
+        private readonly Board[,] mGameBoard;
+        public Board[,] GetGameBoard()
         {
-            return mGameBoard; 
+            return mGameBoard;
         }
 
-        public Logic() {
+        public Logic()
+        {
             int _sizeY = 3;
             int _sizeX = 3;
             scoreList = new();
             mGameBoard = new Board[_sizeY, _sizeX];
             SetRandomePlayer();
             gameState = TurnResult.Valid;
-        }   
+        }
         /// <summary>
         /// Set the defaults and randome the current player
         /// </summary>
@@ -59,10 +61,8 @@ namespace TTTLogic
         {
             TurnResult _return;
             //The winner is certain.
-            if (GameIsFinished())
-            {
-                _return = TurnResult.Invalid;
-            }
+            if (GameIsFinished()) return TurnResult.Invalid;
+
             else
             {
                 //Check whether coordinates are in the valid area and a blank field.
@@ -71,16 +71,16 @@ namespace TTTLogic
                     //entry the mark.
                     mGameBoard[_y, _X] = CurrentPlayerMark();
                     //Check whether a win or draw.
-                    if (CurrentPlayerWin()) 
+                    if (CurrentPlayerWin())
                     {
                         //When player won ...
                         //return winner.
                         _return = mCurrentPlayer ? TurnResult.WinX : TurnResult.WinO;
 
                         //Enter the winner in the list.
-                        scoreList.Add(_return);      
+                        scoreList.Add(_return);
                     }
-                    else if(BordIsFull())
+                    else if (BordIsFull())
                     {
                         //When the board is full but no winner...
                         //return draw
@@ -109,15 +109,16 @@ namespace TTTLogic
         /// Give Back the player equivalent from (enumartion)Board.
         /// </summary>
         /// <returns>(enumartion)Board</returns>
-        private Board CurrentPlayerMark() {
-            if (mCurrentPlayer)
+        private Board CurrentPlayerMark()
+        {
+            if (mCurrentPlayer) 
             {
                 return Board.X;
             }
-            else 
+            else
             {
                 return Board.O;
-            }        
+            }
         }
         /// <summary>
         /// Check the Y and X values are in the length of the board and not lesser than zero. 
@@ -125,9 +126,10 @@ namespace TTTLogic
         /// <param name="_Y">vertical value</param>
         /// <param name="_X">horizontal value</param>
         /// <returns></returns>
-        private bool IsInBoardRange(int _Y,int _X) {
-            if ((_Y < 0 || _Y > mGameBoard.GetLength(AxisY) - 1) 
-             || (_X < 0 || _X > mGameBoard.GetLength(AxisX) - 1))return false ;
+        private bool IsInBoardRange(int _Y, int _X)
+        {
+            if ((_Y < 0 || _Y > mGameBoard.GetLength(AxisY) - 1)
+             || (_X < 0 || _X > mGameBoard.GetLength(AxisX) - 1)) return false;
             return true;
         }
         /// <summary>
@@ -146,10 +148,11 @@ namespace TTTLogic
         /// <summary>
         /// Set mCurrentPlayer random to true or false.
         /// </summary>
-        private void SetRandomePlayer() {
+        private void SetRandomePlayer()
+        {
             Random rand = new Random();
-            int numb = rand.Next(1,3);//bei 1-2 wird nur eins ausgespucke bei 1-3  wird 1-2 !!!also ist 2 Parameter  nicht mehr im Pool
-            switch (numb) 
+            int numb = rand.Next(1, 3);//bei 1-2 wird nur eins ausgespucke bei 1-3  wird 1-2 !!!also ist 2 Parameter  nicht mehr im Pool
+            switch (numb)
             {
                 case 0: mCurrentPlayer = false; break;
                 case 1: mCurrentPlayer = true; break;
@@ -159,7 +162,7 @@ namespace TTTLogic
         /// Check if the current player has won
         /// </summary>
         /// <returns>bool for player</returns>
-        private bool CurrentPlayerWin() 
+        private bool CurrentPlayerWin()
         {
             Board _playerMark = CurrentPlayerMark();
             if (
@@ -198,13 +201,14 @@ namespace TTTLogic
                 )
             )
             { return true; }
-            else { return false;}     
+            else { return false; }
         }
         /// <summary>
         /// If no field is empty it returns true else false.
         /// </summary>
         /// <returns> true / fals </returns>
-        private bool BordIsFull() {
+        private bool BordIsFull()
+        {
             foreach (var field in mGameBoard)
             {
                 if (field == Board.Empty) return false;

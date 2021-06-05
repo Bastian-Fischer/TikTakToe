@@ -194,7 +194,7 @@ namespace TikTakToeTest
                 Assert.IsTrue(l.PlayerTurn(1, 1) == TurnResult.Valid); // X
                 Assert.IsTrue(l.PlayerTurn(1, 2) == TurnResult.Valid); // O
                 Assert.IsTrue(l.PlayerTurn(2, 1) == TurnResult.Valid); // X
-                Assert.IsTrue(l.PlayerTurn(2, 2) == TurnResult.Draw); // O
+                Assert.IsTrue(l.PlayerTurn(2, 2) == TurnResult.Draw);  // O
             }
 
             [TestMethod]
@@ -213,7 +213,7 @@ namespace TikTakToeTest
                 Assert.IsTrue(l.PlayerTurn(2, 0) == TurnResult.Valid); // O 
                 Assert.IsTrue(l.PlayerTurn(2, 1) == TurnResult.Valid); // X
                 Assert.IsTrue(l.PlayerTurn(1, 2) == TurnResult.Valid); // O
-                Assert.IsTrue(l.PlayerTurn(2, 2) != TurnResult.Draw); // X
+                Assert.IsTrue(l.PlayerTurn(2, 2) != TurnResult.Draw);  // X
             }
 
             [TestMethod]

@@ -29,6 +29,7 @@ namespace UIConsole
             mTicksCounter = 0;
             mTicksPerSecond = 0;
         }
+
         public void ShowFramesPerSecond()
         {
             mTickTime = DateTime.Now;

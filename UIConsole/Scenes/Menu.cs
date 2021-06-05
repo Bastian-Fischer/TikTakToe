@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace UIConsole
-{
+{ 
     class Menu : Scene
     {
+
         public Menu()
         {
 
@@ -34,7 +35,8 @@ namespace UIConsole
                     mActiveButton = (byte)(mActiveButton == mButtonList.Count - 1 ? 0 : mActiveButton + 1);
                     mButtonList[mActiveButton].IsSelected = true;
                     break;
-                case ConsoleKey.Enter:
+
+                case ConsoleKey.Enter: //todo change to default, let ui element handle input (button tut button dinge)
                     mButtonList[mActiveButton].Execute();
                     break;
             }

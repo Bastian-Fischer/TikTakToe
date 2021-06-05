@@ -3,8 +3,10 @@
 namespace UIConsole
 {
     //todo: finish button
+    //todo: either sealed button or allow inheritance and make private protected
     class Button : Label
     {
+        
         private ConsoleColor mColorSelected;
         private ConsoleColor mColorNotSelected;
         private Action mCommand;
@@ -19,10 +21,10 @@ namespace UIConsole
             int _posX,
             string _text,
             Action _mCommand
-            ) : base(_posY, _posX, _text, Resources.MenuColorFront, Resources.MenuColorBack)
+            ) : base(_posY, _posX, _text, Resources.MainResources.MenuColorFront, Resources.MainResources.MenuColorBack)
         {
-            mColorNotSelected = Resources.MenuColorBack;
-            mColorSelected = Resources.MenuColorActive;
+            mColorNotSelected = MainResources.MenuColorBack;
+            mColorSelected = MainResources.MenuColorActive;
             mCommand = _mCommand;
         }
         public Button(
@@ -30,10 +32,10 @@ namespace UIConsole
             Positioning _pos,
             string _text,
             Action _mCommand
-            ) : base(_posY, _pos, _text, Resources.MenuColorFront, Resources.MenuColorBack)
+            ) : base(_posY, _pos, _text, Resources.MainResources.MenuColorFront, Resources.MainResources.MenuColorBack)
         {
-            mColorNotSelected = Resources.MenuColorBack;
-            mColorSelected = Resources.MenuColorActive;
+            mColorNotSelected = MainResources.MenuColorBack;
+            mColorSelected = MainResources.MenuColorActive;
             mCommand = _mCommand;
         }
         public void Execute()

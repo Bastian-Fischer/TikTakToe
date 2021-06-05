@@ -8,10 +8,6 @@ namespace UIConsole
     class SceneManager
     { 
         private static SceneManager mInstance;
-        private LinkedList<Scene> mSceneList; //X
-       
-
-
         public static SceneManager Instance
         {
             get
@@ -21,14 +17,16 @@ namespace UIConsole
                 return mInstance;
             }
         }
+        private LinkedList<Scene> mSceneList; //X
+       
+
+
 
         private SceneManager()
         {
             // niemand darf einen SceneManager erstellen, darum Private
             mSceneList = new();
         }
-
-
 
         public void Update()//X
         {

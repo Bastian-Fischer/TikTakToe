@@ -6,20 +6,19 @@ using System.Threading.Tasks;
 
 namespace UIConsole
 {
-    class GameScreen : Scene
+    class GameScreen : Scene 
     {
-        private TTTLogic.Logic mGameLogic;
-
-        private readonly int mFieldStartPosY;
-        private readonly int mFieldStartPosX;
-        private readonly int mFieldSizeY;
-        private readonly int mFieldSizeX;
-        private readonly int mGameSizeY;
-        private readonly int mGameSizeX;                      
-        private ConsoleColor mCurrentCursorColor;
-        private int currentY;
-        private int currentX;
-
+        protected TTTLogic.Logic mGameLogic;
+        protected readonly int mFieldStartPosY;
+        protected readonly int mFieldStartPosX;
+        protected readonly int mFieldSizeY;
+        protected readonly int mFieldSizeX;
+        protected readonly int mGameSizeY;
+        protected readonly int mGameSizeX;                      
+        protected ConsoleColor mCurrentCursorColor;
+        protected int currentY;
+        protected int currentX;
+        protected TTTLogic.TurnResult mTurnResult;
         public GameScreen(int _startY) 
         {
             mGameLogic = new();
@@ -28,10 +27,10 @@ namespace UIConsole
             mGameSizeY = 3;
             mGameSizeX = 3;        
 
-            mFieldSizeY = Resources.FieldX.GetLength(0);
-            mFieldSizeX = Resources.FieldX.GetLength(1);
+            mFieldSizeY = Resources.MainResources.FieldX.GetLength(0);
+            mFieldSizeX = MainResources.FieldX.GetLength(1);
             mFieldStartPosY = _startY;
-            mFieldStartPosX =  Console.BufferWidth /2 - (2+(mGameSizeX * Resources.FieldE.GetLength(1)+1)/2);
+            mFieldStartPosX =  Console.BufferWidth /2 - (2+(mGameSizeX * MainResources.FieldE.GetLength(1)+1)/2);
 
             StartGame();
         }
@@ -65,7 +64,7 @@ namespace UIConsole
             int startY;
             int startX;
 
-            mCurrentCursorColor = mGameLogic.GetCurrentPlayer()? Resources.PlayerBColorBack : Resources.PlayerAColorBack;
+            mCurrentCursorColor = mGameLogic.GetCurrentPlayer()? MainResources.PlayerBColorFront : MainResources.PlayerAColorFront;
 
             for (int countFY = 0; countFY < mGameSizeY; countFY++)
             {
@@ -78,33 +77,33 @@ namespace UIConsole
                     {
                         
                         DrawOneField(
-                            Resources.FieldE,
+                            MainResources.FieldE,
                             startY,
                             startX,
-                            Resources.BoardColorFront,
-                            (countFY+1 == currentY && countFX+1 == currentX) ? mCurrentCursorColor : Resources.BoardColorBack
+                            MainResources.BoardColorFront,
+                            (countFY+1 == currentY && countFX+1 == currentX) ? mCurrentCursorColor : MainResources.BoardColorBack
                         );
 
                     }
                     else if(GameBoard[countFY, countFX] == TTTLogic.Board.O)
                     {
                         DrawOneField(
-                                Resources.FieldO,
+                                MainResources.FieldO,
                                 startY,
                                 startX,
-                                Resources.PlayerAColorFront,
-                                (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : Resources.PlayerAColorBack
+                                MainResources.PlayerAColorFront,
+                                (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.PlayerAColorBack
                             );
 
                     }
                     else if (GameBoard[countFY, countFX] == TTTLogic.Board.X)
                     {
                         DrawOneField(
-                                Resources.FieldX,
+                                MainResources.FieldX,
                                 startY,
                                 startX,
-                                Resources.PlayerBColorFront,
-                                (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : Resources.PlayerBColorBack
+                                MainResources.PlayerBColorFront,
+                                (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.PlayerBColorBack
                             );
                     }       
                 }
@@ -115,17 +114,17 @@ namespace UIConsole
             Console.Clear();
             //Erstmal nur für 3x3
 
-            string spacerLine = ""+ Resources.boarderHO;
+            string spacerLine = ""+ MainResources.boarderHO;
             for (int countF = 0; countF < mGameSizeX; countF++) 
             {
                 for (int countFSX = 0; countFSX < mFieldSizeX; countFSX++)
                 {
                     spacerLine += ' ';
                 }
-                spacerLine += Resources.boarderHO;
+                spacerLine += MainResources.boarderHO;
             }
-            Console.ForegroundColor = Resources.BoardColorFront;
-            Console.BackgroundColor = Resources.BoardColorBack;
+            Console.ForegroundColor = MainResources.BoardColorFront;
+            Console.BackgroundColor = MainResources.BoardColorBack;
             string lineBuffer = "";
             int stepperY = 0;
             for (int counterY = 0; counterY <= mGameSizeY; counterY++)
@@ -134,33 +133,33 @@ namespace UIConsole
                 {
                     if (counterY == 0)
                     { 
-                        if (counterX == 0) lineBuffer += Resources.boarderLT;//┌
-                        if (counterX > 0 && counterX != mGameSizeX) lineBuffer += Resources.boarderTC; //┬
+                        if (counterX == 0) lineBuffer += MainResources.boarderLT;//┌
+                        if (counterX > 0 && counterX != mGameSizeX) lineBuffer += MainResources.boarderTC; //┬
                         for (int count = 0; count < mFieldSizeX; count++)
                         {
-                            lineBuffer += Resources.boarderVE;// Feldbreite entlang ─
+                            lineBuffer += MainResources.boarderVE;// Feldbreite entlang ─
                         }
-                        if (counterX == mGameSizeX - 1) lineBuffer += Resources.baorderTR;// am ende ┐
+                        if (counterX == mGameSizeX - 1) lineBuffer += MainResources.baorderTR;// am ende ┐
                     }
                     if (counterY > 0 && counterY < mGameSizeY)
                     {
-                        if (counterX == 0) lineBuffer += Resources.boarderLC;//├
-                        if (counterX > 0 && counterX != mGameSizeX ) lineBuffer += Resources.boarderCR; //┼
+                        if (counterX == 0) lineBuffer += MainResources.boarderLC;//├
+                        if (counterX > 0 && counterX != mGameSizeX ) lineBuffer += MainResources.boarderCR; //┼
                         for (int count = 0; count < mFieldSizeX; count++)
                         {
-                            lineBuffer += Resources.boarderVE;// Feldbreite entlang ─
+                            lineBuffer += MainResources.boarderVE;// Feldbreite entlang ─
                         }
-                        if (counterX == mGameSizeX - 1) lineBuffer += Resources.boarderRC;// am ende ┤
+                        if (counterX == mGameSizeX - 1) lineBuffer += MainResources.boarderRC;// am ende ┤
                     }
                     if (counterY == mGameSizeY) 
                     {
-                        if (counterX == 0) lineBuffer += Resources.boarderBL;//└
-                        if (counterX > 0 && counterX != mGameSizeX) lineBuffer += Resources.boarderBC; //┴
+                        if (counterX == 0) lineBuffer += MainResources.boarderBL;//└
+                        if (counterX > 0 && counterX != mGameSizeX) lineBuffer += MainResources.boarderBC; //┴
                         for (int count = 0; count < mFieldSizeX; count++)
                         {
-                            lineBuffer += Resources.boarderVE;// Feldbreite entlang ─
+                            lineBuffer += MainResources.boarderVE;// Feldbreite entlang ─
                         }
-                        if (counterX == mGameSizeX - 1) lineBuffer += Resources.boarderRB;// am ende ┘
+                        if (counterX == mGameSizeX - 1) lineBuffer += MainResources.boarderRB;// am ende ┘
                     }
 
                 }
@@ -183,7 +182,7 @@ namespace UIConsole
             DrawField();
             if (mGameLogic.GameIsFinished())
             {
-                SceneManager.Instance.AddScene(new GameOver(mGameLogic,this));
+                SceneManager.Instance.AddScene(new GameOver(mGameLogic, mTurnResult, this));
             }
             else 
             {
@@ -204,7 +203,7 @@ namespace UIConsole
                         break;
 
                     case ConsoleKey.Enter:
-                        mGameLogic.PlayerTurn(currentX-1, currentY-1);
+                        mTurnResult = mGameLogic.PlayerTurn(currentX-1, currentY-1);
                         break;
                 }
             }
