@@ -36,6 +36,8 @@ namespace UIConsole
         public ConsoleColor playerBMarkColorFront;
         [JsonInclude]
         public string       playerBMarkURL;
+        [JsonInclude]
+        public string       TikTakToeURL;
         //EmptyField
 
         [JsonInclude]
@@ -59,6 +61,8 @@ namespace UIConsole
         public ConsoleColor menuColorBack;
         [JsonInclude]
         public ConsoleColor menuColorActive;
+        [JsonInclude]
+        public string       MenuURL;
         //---GameOver
         [JsonInclude]
         public string       gameOverWinnerURL;

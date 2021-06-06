@@ -5,12 +5,11 @@ namespace UIConsole
     //todo: finish button
     //todo: either sealed button or allow inheritance and make private protected
     class Button : Label
-    {
-        
-        private ConsoleColor mColorSelected;
-        private ConsoleColor mColorNotSelected;
-        private Action mCommand;
-        private bool isSelected; 
+    {        
+        protected ConsoleColor mColorSelected;
+
+        protected Action mCommand;
+        protected bool isSelected; 
         public bool IsSelected{
             get { return isSelected; }
             set { isSelected = value; }     
@@ -23,7 +22,6 @@ namespace UIConsole
             Action _mCommand
             ) : base(_posY, _posX, _text, Resources.MainResources.MenuColorFront, Resources.MainResources.MenuColorBack)
         {
-            mColorNotSelected = MainResources.MenuColorBack;
             mColorSelected = MainResources.MenuColorActive;
             mCommand = _mCommand;
         }
@@ -32,9 +30,29 @@ namespace UIConsole
             Positioning _pos,
             string _text,
             Action _mCommand
-            ) : base(_posY, _pos, _text, Resources.MainResources.MenuColorFront, Resources.MainResources.MenuColorBack)
+            ) : base(_text,_posY, _pos,  Resources.MainResources.MenuColorFront, Resources.MainResources.MenuColorBack)
         {
-            mColorNotSelected = MainResources.MenuColorBack;
+            mColorSelected = MainResources.MenuColorActive;
+            mCommand = _mCommand;
+        }
+
+        public Button(
+            int _posY,
+            int _posX,
+            string[] _text,
+            Action _mCommand
+            ) : base(_posY, _posX, _text, Resources.MainResources.MenuColorFront, Resources.MainResources.MenuColorBack)
+        {
+            mColorSelected = MainResources.MenuColorActive;
+            mCommand = _mCommand;
+        }
+        public Button(
+            int _posY,
+            Positioning _pos,
+            string[] _text,
+            Action _mCommand
+            ) : base(_text,_posY, _pos,  Resources.MainResources.MenuColorFront, Resources.MainResources.MenuColorBack)
+        {
             mColorSelected = MainResources.MenuColorActive;
             mCommand = _mCommand;
         }
@@ -47,7 +65,7 @@ namespace UIConsole
         {
 
             Console.SetCursorPosition(mPosX, mPosY);
-            Console.BackgroundColor = IsSelected ? mColorSelected : mColorNotSelected;
+            Console.BackgroundColor = IsSelected ? mColorSelected : mColorBack;
             int posY = mPosY;
             foreach (var item in mText)
             {         

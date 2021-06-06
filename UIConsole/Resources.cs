@@ -21,20 +21,19 @@ namespace UIConsole
             }
         }
         public Config mainConfig;
-
-        
-
+        public string[] TikTakToe;
+        public string[] Menu;
         public string[] winner;
         public string[] winX;
         public string[] winO;
         public string[] winD;
         public string[] draw;
 
-        public char[,] FieldX;
-        public char[,] FieldO;
-        public char[,] FieldE;
-        private char[] mBoarderList;
+        public string[] FieldX;
+        public string[] FieldO;
+        public string[] FieldE;
 
+        private char[] mBoarderList;
         public char boarderLT;//'┌'
         public char boarderTC;//'┬'
         public char baorderTR;//'┐'
@@ -51,7 +50,7 @@ namespace UIConsole
             mainConfig = CreateDefault();
             SetValues();
         }
-                                     //Board
+        //Board
         public ConsoleColor BoardColorFront
         {
             get { return mainConfig.boardColorFront; }
@@ -113,20 +112,20 @@ namespace UIConsole
         {
             get { return mainConfig.menuColorActive; }
         }
-
-
-
         public void SetValues() 
         {
+            TikTakToe = LoadAs.StringArr(mainConfig.TikTakToeURL);
+            Menu = LoadAs.StringArr(mainConfig.MenuURL);
+
             winner = LoadAs.StringArr(mainConfig.gameOverWinnerURL);
             winX = LoadAs.StringArr(mainConfig.gameOverWinBURL);
             winO = LoadAs.StringArr(mainConfig.gameOverWinAURL);
             winD = LoadAs.StringArr(mainConfig.gameOverWinDURL);
             draw = LoadAs.StringArr(mainConfig.gameOverDrawURL);
 
-            FieldX = LoadAs.CharMultidimensionalArr(mainConfig.playerBMarkURL);
-            FieldO = LoadAs.CharMultidimensionalArr(mainConfig.playerAMarkURL);
-            FieldE = LoadAs.CharMultidimensionalArr(mainConfig.EmptyMarkURL);
+            FieldX = LoadAs.StringArr(mainConfig.playerBMarkURL);
+            FieldO = LoadAs.StringArr(mainConfig.playerAMarkURL);
+            FieldE = LoadAs.StringArr(mainConfig.EmptyMarkURL);
             mBoarderList = LoadAs.CharArrFirstOneFromLine(mainConfig.boarderURL);
 
             //todo replace variables with enum access to list
@@ -143,7 +142,6 @@ namespace UIConsole
             boarderHO = mBoarderList[10];//'│
 
         }
-
         public Config CreateDefault()
         {
             Config _return;
@@ -153,6 +151,8 @@ namespace UIConsole
             _return.systemColorFront = ConsoleColor.White;
             _return.systemColorAcent = ConsoleColor.Gray;
             _return.systemColorBack = ConsoleColor.Black;
+            _return.TikTakToeURL = dirIMG + "TikTakToe.txt";
+            _return.MenuURL = dirIMG + "Menu.txt";
 
             _return.playerAMarkColorFront = ConsoleColor.Blue;
             _return.playerAMarkColorBack = ConsoleColor.DarkBlue;
@@ -169,11 +169,10 @@ namespace UIConsole
             _return.boarderURL = dirIMG + "Boarder.txt"; ;
             _return.boardColorFront = ConsoleColor.White;
             _return.boardColorBack = ConsoleColor.DarkGray;
-            //Menu
+
             _return.menuColorFront = ConsoleColor.White;
             _return.menuColorBack = ConsoleColor.Black;
             _return.menuColorActive = ConsoleColor.DarkBlue;
-
 
             _return.gameOverWinnerURL = dirIMG + "Winner.txt";
             _return.gameOverDrawURL = dirIMG + "Draw.txt";
@@ -183,14 +182,12 @@ namespace UIConsole
 
             return _return;
         }
-
         public void SaveConfigJson(Config _config, string _name, string _dir = "System/")
         {
             //TODO json Serialiser, idealerweise mit StreamWriter
             string jsonString = JsonSerializer.Serialize(_config);
             File.WriteAllText(_dir+ _name+".json", jsonString);
         }
-
         public Config LoadConfigJson(string _dir) {
 
             var options = new JsonSerializerOptions

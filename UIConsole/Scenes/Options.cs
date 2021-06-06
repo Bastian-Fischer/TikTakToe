@@ -20,7 +20,7 @@ namespace UIConsole.Scenes
             int _Y = 5;
             string dirIMG = "TTTIMG/";
             editConfig = MainResources.mainConfig;
-            mLabelList.Add(new Label(2, Positioning.center, "____________MENU____________", MainResources.SystemColorFront, MainResources.SystemColorBack));
+            mLabelList.Add(new Label( "____________MENU____________",2, Positioning.center, MainResources.SystemColorFront, MainResources.SystemColorBack));
        
             //playerA
             mLabelList.Add(new Label(_Y, 10, "Player 1",MainResources.SystemColorFront, MainResources.SystemColorBack));

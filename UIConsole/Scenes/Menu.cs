@@ -12,8 +12,10 @@ namespace UIConsole
 
         public Menu()
         {
-
-            
+            mLabelList.Clear();
+            mButtonList.Clear();
+            Console.Clear();
+            mLabelList.Add(new Label( MainResources.Menu ,1, Positioning.center, MainResources.SystemColorFront, MainResources.SystemColorBack));
             mButtonList.Add(new Button(10, Positioning.center, "Start New Game",() => SceneManager.Instance.AddScene(new GameScreen(10))));
             //mButtonList.Add(new Button(12, Positioning.center, "Credits", () => SceneManager.Instance.RemoveScene(this)));
             mButtonList.Add(new Button(12, Positioning.center, "Quit", () => SceneManager.Instance.RemoveScene(this)));
