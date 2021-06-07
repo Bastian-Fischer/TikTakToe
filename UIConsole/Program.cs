@@ -11,7 +11,7 @@ namespace UIConsole
 
             //Resources.SaveConfigJson(Resources.mainConfig, "main");
             //Resources.mainConfig.
-            FramesPerSecond FPS = new(0,0,ConsoleColor.Yellow, ConsoleColor.Black);
+            FramesPerSecond FPS = new(0,0,ConsoleColor.White, ConsoleColor.Black);
             FramesPerSecond updateTime = new(0, 10, ConsoleColor.Yellow, ConsoleColor.Black,"Draw");
             FramesPerSecond drawTime = new(0, 35, ConsoleColor.Yellow, ConsoleColor.Black,"Update");
             Console.CursorVisible = false;

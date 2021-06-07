@@ -9,7 +9,8 @@ namespace UIConsole
     class GameScreen : Scene 
     {
         //protected ClearLayer _clearb = new();
-       // protected ClearLayer _clearl = new();
+        // protected ClearLayer _clearl = new();
+        protected bool mGameOver = false;
         protected TTTLogic.Logic mGameLogic;
         protected readonly int mFieldStartPosY;
         protected readonly int mFieldStartPosX;
@@ -207,9 +208,8 @@ namespace UIConsole
             mLabelList.Add(mBoarder);          
         }
         public override void Update()
-        {
-            
-            if (mGameLogic.GameIsFinished())
+        {          
+            if (mGameOver)
             {
                 SceneManager.Instance.AddScene(new GameOver(mGameLogic, mTurnResult, this));
             }
@@ -238,6 +238,7 @@ namespace UIConsole
                         case ConsoleKey.Enter:
                             mTurnResult = mGameLogic.PlayerTurn(currentX-1, currentY-1);
                             UpdateFields();
+                            if (mTurnResult == TTTLogic.TurnResult.Draw || mTurnResult == TTTLogic.TurnResult.WinO || mTurnResult == TTTLogic.TurnResult.WinX) mGameOver = true;
                             break;
                     }
                 }
@@ -279,6 +280,7 @@ namespace UIConsole
             Console.Clear();
             //_clearb.ReDeaw = true;
             //_clearl.ReDeaw = true;
+            mGameOver = false;
             mGameLogic.Reset();
             mBoarder.ReDeaw = true;
             UpdateFields();

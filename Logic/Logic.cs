@@ -7,18 +7,13 @@ namespace TTTLogic
 
     public class Logic
     {
-        public const int AxisY = 0;
-        public const int AxisX = 1;
-
+        private readonly int mBoardSizeY;
+        private readonly int mBoardSizeX;
+        private bool mGameOver = false;
         private bool mCurrentPlayer;
-        private TurnResult gameState;
         public bool GetCurrentPlayer() //Forgegeben /Struktur
         {
             return mCurrentPlayer;
-        }
-        public TurnResult GameState
-        {
-            get { return gameState; }
         }
         private readonly List<TurnResult> scoreList;
         public List<TurnResult> GetScoreList() //Forgegeben /Struktur
@@ -33,12 +28,11 @@ namespace TTTLogic
 
         public Logic()
         {
-            int _sizeY = 3;
-            int _sizeX = 3;
+            mBoardSizeY = 3;
+            mBoardSizeX = 3;
             scoreList = new();
-            mGameBoard = new Board[_sizeY, _sizeX];
+            mGameBoard = new Board[mBoardSizeY, mBoardSizeX];
             SetRandomePlayer();
-            gameState = TurnResult.Valid;
         }
         /// <summary>
         /// Set the defaults and randome the current player
@@ -46,7 +40,7 @@ namespace TTTLogic
         public void Reset() //Forgegeben 
         {
             ClearBoard();
-            gameState = TurnResult.Valid;
+            mGameOver = false;
             mCurrentPlayer = !mCurrentPlayer;
         }
         /// <summary>
@@ -59,51 +53,35 @@ namespace TTTLogic
         /// <returns></returns>
         public TurnResult PlayerTurn(int _X, int _y) //Forgegeben 
         {
-            TurnResult _return;
             //The winner is certain.
-            if (GameIsFinished()) return TurnResult.Invalid;
-
-            else
+            //if (GameIsFinished()) return TurnResult.Invalid;
+            if (mGameOver) return TurnResult.Invalid;
+            //Check whether coordinates are in the valid area and a blank field.
+            if (IsInBoardRange(_y, _X) && mGameBoard[_y, _X] == Board.Empty)
             {
-                //Check whether coordinates are in the valid area and a blank field.
-                if (IsInBoardRange(_y, _X) && mGameBoard[_y, _X] == Board.Empty)
-                {
-                    //entry the mark.
-                    mGameBoard[_y, _X] = CurrentPlayerMark();
-                    //Check whether a win or draw.
-                    if (CurrentPlayerWin())
-                    {
-                        //When player won ...
-                        //return winner.
-                        _return = mCurrentPlayer ? TurnResult.WinX : TurnResult.WinO;
-
-                        //Enter the winner in the list.
-                        scoreList.Add(_return);
-                    }
-                    else if (BordIsFull())
-                    {
-                        //When the board is full but no winner...
-                        //return draw
-                        _return = TurnResult.Draw;
-                        //Enter draw in the list.
-                        scoreList.Add(_return);
-                    }
-                    else
-                    {
-                        //When the playing field is not full and not a winner detected...
-                        //return valid.
-                        _return = TurnResult.Valid;
-                        //Change the current player.
-                        mCurrentPlayer = !mCurrentPlayer;
-                    }
+                //entry the mark.
+                mGameBoard[_y, _X] = CurrentPlayerMark();
+                //Check whether a win or draw.
+                if (CurrentPlayerWin())
+                {       
+                    mGameOver = true;
+                    scoreList.Add(mCurrentPlayer ? TurnResult.WinX : TurnResult.WinO);
+                    return mCurrentPlayer ? TurnResult.WinX : TurnResult.WinO;
                 }
-                //otherwise the turn is invalid.
-                else { _return = TurnResult.Invalid; }
+                else if (BordIsFull())
+                {
+                    mGameOver = true;
+                    scoreList.Add(TurnResult.Draw);
+                    return  TurnResult.Draw;
+                }
+                else
+                {
+                    mCurrentPlayer = !mCurrentPlayer;
+                    return TurnResult.Valid;
+                }
             }
-            //Set the gameState to the return TurnResult.
-            gameState = _return;
-            //return the TurnResult.
-            return _return;
+            //otherwise the turn is invalid.
+            else { return TurnResult.Invalid; }  
         }
         /// <summary>
         /// Give Back the player equivalent from (enumartion)Board.
@@ -111,14 +89,7 @@ namespace TTTLogic
         /// <returns>(enumartion)Board</returns>
         private Board CurrentPlayerMark()
         {
-            if (mCurrentPlayer) 
-            {
-                return Board.X;
-            }
-            else
-            {
-                return Board.O;
-            }
+            return mCurrentPlayer ? Board.X : Board.O;
         }
         /// <summary>
         /// Check the Y and X values are in the length of the board and not lesser than zero. 
@@ -128,18 +99,16 @@ namespace TTTLogic
         /// <returns></returns>
         private bool IsInBoardRange(int _Y, int _X)
         {
-            if ((_Y < 0 || _Y > mGameBoard.GetLength(AxisY) - 1)
-             || (_X < 0 || _X > mGameBoard.GetLength(AxisX) - 1)) return false;
-            return true;
+           return ((_Y > -1 && _Y < mBoardSizeY) && (_X > -1 && _X < mBoardSizeX));        
         }
         /// <summary>
         /// Set all Fields to empty.
         /// </summary>
         private void ClearBoard()
         {
-            for (int y = 0; y < mGameBoard.GetLength(AxisY); y++)
+            for (int y = 0; y < mBoardSizeY ; y++)
             {
-                for (int x = 0; x < mGameBoard.GetLength(AxisX); x++)
+                for (int x = 0; x < mBoardSizeX ; x++)
                 {
                     mGameBoard[y, x] = Board.Empty;
                 }
@@ -151,8 +120,7 @@ namespace TTTLogic
         private void SetRandomePlayer()
         {
             Random rand = new Random();
-            int numb = rand.Next(1, 3);//bei 1-2 wird nur eins ausgespucke bei 1-3  wird 1-2 !!!also ist 2 Parameter  nicht mehr im Pool
-            switch (numb)
+            switch (rand.Next(1, 3))
             {
                 case 0: mCurrentPlayer = false; break;
                 case 1: mCurrentPlayer = true; break;
@@ -165,7 +133,7 @@ namespace TTTLogic
         private bool CurrentPlayerWin()
         {
             Board _playerMark = CurrentPlayerMark();
-            if (
+            return (
                 (
                    mGameBoard[0, 0] == _playerMark//#--
                 && mGameBoard[1, 0] == _playerMark//#--
@@ -199,9 +167,7 @@ namespace TTTLogic
                 && mGameBoard[1, 1] == _playerMark//-#-
                 && mGameBoard[2, 0] == _playerMark//#--
                 )
-            )
-            { return true; }
-            else { return false; }
+            );
         }
         /// <summary>
         /// If no field is empty it returns true else false.
@@ -214,18 +180,6 @@ namespace TTTLogic
                 if (field == Board.Empty) return false;
             }
             return true;
-        }
-        /// <summary>
-        /// If TurnResult is Draw or Win it return ture else false.
-        /// </summary>
-        /// <returns>true / false</returns>
-        public bool GameIsFinished()
-        {
-            if (gameState == TurnResult.Draw || gameState == TurnResult.WinO || gameState == TurnResult.WinX)
-            {
-                return true;
-            }
-            else { return false; }
         }
     }
 }
