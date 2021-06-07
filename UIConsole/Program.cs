@@ -11,7 +11,9 @@ namespace UIConsole
 
             //Resources.SaveConfigJson(Resources.mainConfig, "main");
             //Resources.mainConfig.
-            FramesPerSecond FPS = new(0,0,ConsoleColor.White, ConsoleColor.Black);
+            FramesPerSecond FPS = new(0,0,ConsoleColor.Yellow, ConsoleColor.Black);
+            FramesPerSecond updateTime = new(0, 10, ConsoleColor.Yellow, ConsoleColor.Black,"Draw");
+            FramesPerSecond drawTime = new(0, 35, ConsoleColor.Yellow, ConsoleColor.Black,"Update");
             Console.CursorVisible = false;
             Console.SetWindowSize(1 , 1 );
             Console.SetBufferSize(90, 50);    
@@ -40,11 +42,12 @@ namespace UIConsole
             while (!SceneManager.Instance.SceneListIsEmpty())
             {
                 FPS.ShowFramesPerSecond();
-                
+                drawTime.HowLongStart();
                 SceneManager.Instance.Draw();
-                FPS.HowLongStart();
+                drawTime.HowLongEnd();
+                updateTime.HowLongStart();
                 SceneManager.Instance.Update();
-                FPS.HowLongEnd();              
+                updateTime.HowLongEnd();              
             }
 
         }

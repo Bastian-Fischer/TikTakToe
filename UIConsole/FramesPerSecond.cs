@@ -62,8 +62,8 @@ namespace UIConsole
 
             Console.ForegroundColor = front;
             Console.BackgroundColor = back;
-            Console.SetCursorPosition(x+10+name.Length, y);
-            Console.Write(name + timeTickDifer + " Miliseconds");
+            Console.SetCursorPosition(x, y);
+            Console.Write(name + timeTickDifer + " Milliseconds");
             Console.ResetColor();
         }
     }
