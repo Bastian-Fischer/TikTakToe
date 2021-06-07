@@ -215,30 +215,31 @@ namespace UIConsole
             }
             else 
             {
-                
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        if (currentY > 1) currentY--;
-                        UpdateFields();
-                        break;
-                    case ConsoleKey.DownArrow:
-                        if (currentY < mGameSizeY) currentY++;
-                        UpdateFields();
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        if (currentX > 1) currentX--;
-                        UpdateFields();
-                        break;
-                    case ConsoleKey.RightArrow:
-                        if (currentX < mGameSizeX) currentX++;
-                        UpdateFields();
-                        break;
+                if(Console.KeyAvailable == true) { 
+                    switch (Console.ReadKey(true).Key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            if (currentY > 1) currentY--;
+                            UpdateFields();
+                            break;
+                        case ConsoleKey.DownArrow:
+                            if (currentY < mGameSizeY) currentY++;
+                            UpdateFields();
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            if (currentX > 1) currentX--;
+                            UpdateFields();
+                            break;
+                        case ConsoleKey.RightArrow:
+                            if (currentX < mGameSizeX) currentX++;
+                            UpdateFields();
+                            break;
 
-                    case ConsoleKey.Enter:
-                        mTurnResult = mGameLogic.PlayerTurn(currentX-1, currentY-1);
-                        UpdateFields();
-                        break;
+                        case ConsoleKey.Enter:
+                            mTurnResult = mGameLogic.PlayerTurn(currentX-1, currentY-1);
+                            UpdateFields();
+                            break;
+                    }
                 }
             }
         }

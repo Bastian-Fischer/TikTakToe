@@ -65,6 +65,7 @@ namespace UIConsole
         {
 
             Console.SetCursorPosition(mPosX, mPosY);
+            Console.ForegroundColor = mColotFront;
             Console.BackgroundColor = IsSelected ? mColorSelected : mColorBack;
             int posY = mPosY;
             foreach (var item in mText)

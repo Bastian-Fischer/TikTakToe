@@ -39,9 +39,12 @@ namespace UIConsole
 
             while (!SceneManager.Instance.SceneListIsEmpty())
             {
-                ///FPS.ShowFramesPerSecond();
+                FPS.ShowFramesPerSecond();
+                
                 SceneManager.Instance.Draw();
-                SceneManager.Instance.Update();               
+                FPS.HowLongStart();
+                SceneManager.Instance.Update();
+                FPS.HowLongEnd();              
             }
 
         }
