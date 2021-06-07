@@ -119,7 +119,7 @@ namespace UIConsole
                                 startY,
                                 startX,
                                 MainResources.PlayerAColorFront,
-                                (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.PlayerAColorBack
+                                (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.BoardColorBack
                             );
 
                     }
@@ -132,7 +132,7 @@ namespace UIConsole
                                 startY,
                                 startX,
                                 MainResources.PlayerBColorFront,
-                                (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.PlayerBColorBack
+                                (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.BoardColorBack
                             );
                     }       
                 }
@@ -245,7 +245,7 @@ namespace UIConsole
         }
         public void UpdateFields() {
             TTTLogic.Board[,] GameBoard = mGameLogic.GetGameBoard();
-            mCurrentCursorColor = mGameLogic.GetCurrentPlayer() ? MainResources.PlayerBColorFront : MainResources.PlayerAColorFront;
+            mCurrentCursorColor = mGameLogic.GetCurrentPlayer() ? MainResources.PlayerBColorBack : MainResources.PlayerAColorBack;
             for (int countFY = 0; countFY < mGameSizeY; countFY++)
             {
                 for (int countFX = 0; countFX < mGameSizeX; countFX++)
@@ -261,14 +261,14 @@ namespace UIConsole
                     {
                         mFieldList[countFY, countFX].Text = MainResources.FieldO;
                         mFieldList[countFY, countFX].ColorFront = MainResources.PlayerAColorFront;
-                        mFieldList[countFY, countFX].ColorBack = (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.PlayerAColorBack;
+                        mFieldList[countFY, countFX].ColorBack = (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.BoardColorBack;
                         mFieldList[countFY, countFX].ReDeaw = true;
                     }
                     else if (GameBoard[countFY, countFX] == TTTLogic.Board.X)
                     {
                         mFieldList[countFY, countFX].Text = MainResources.FieldX;
                         mFieldList[countFY, countFX].ColorFront = MainResources.PlayerBColorFront;
-                        mFieldList[countFY, countFX].ColorBack = (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.PlayerBColorBack;
+                        mFieldList[countFY, countFX].ColorBack = (countFY + 1 == currentY && countFX + 1 == currentX) ? mCurrentCursorColor : MainResources.BoardColorBack;
                         mFieldList[countFY, countFX].ReDeaw = true;
                     }
                 }
