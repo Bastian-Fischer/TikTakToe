@@ -7,14 +7,12 @@ namespace UIConsole
     class Button : Label
     {        
         protected ConsoleColor mColorSelected;
-
         protected Action mCommand;
         protected bool isSelected; 
         public bool IsSelected{
             get { return isSelected; }
             set { isSelected = value; }     
         }
-
         public Button(
             int _posY,
             int _posX,
@@ -35,7 +33,6 @@ namespace UIConsole
             mColorSelected = MainResources.MenuColorActive;
             mCommand = _mCommand;
         }
-
         public Button(
             int _posY,
             int _posX,
@@ -60,10 +57,8 @@ namespace UIConsole
         {
             mCommand();
         }
-
         public override void Draw()
         {
-
             Console.SetCursorPosition(mPosX, mPosY);
             Console.ForegroundColor = mColotFront;
             Console.BackgroundColor = IsSelected ? mColorSelected : mColorBack;
@@ -75,7 +70,5 @@ namespace UIConsole
             }
             Console.ResetColor();
         }
-
-
     }
 }

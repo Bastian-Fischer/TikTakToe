@@ -7,8 +7,16 @@ namespace TTTLogic
 
     public class Logic
     {
+        private readonly int mSmallest = 3;
+        private readonly int mBiggest = 21;
         private readonly int mBoardSizeY;
         private readonly int mBoardSizeX;
+        private readonly int mNeedToWin;
+        public int NeedToWin
+        {
+            get { return mNeedToWin; }
+        }
+
         private bool mGameOver = false;
         private bool mCurrentPlayer;
         public bool GetCurrentPlayer() //Forgegeben /Struktur
@@ -26,13 +34,21 @@ namespace TTTLogic
             return mGameBoard;
         }
 
-        public Logic()
+        public Logic(int _mBoardSizeY = 3, int _mBoardSizeX = 3, int _mNeedToWin = 3)
         {
-            mBoardSizeY = 3;
-            mBoardSizeX = 3;
+            if (_mBoardSizeY < mSmallest) _mBoardSizeY = mSmallest;
+            if (_mBoardSizeX < mSmallest) _mBoardSizeX = mSmallest;
+            if (_mBoardSizeY > mBiggest) _mBoardSizeY = mBiggest;
+            if (_mBoardSizeX > mBiggest) _mBoardSizeX = mBiggest;
+            if (_mNeedToWin < mSmallest) _mNeedToWin = mSmallest;
+            int smallerAxis = Math.Min(_mBoardSizeY, _mBoardSizeX);
+            if (smallerAxis < _mNeedToWin) _mNeedToWin = smallerAxis;
+           mBoardSizeY = _mBoardSizeY;
+            mBoardSizeX = _mBoardSizeX;
+            mNeedToWin = _mNeedToWin;
             scoreList = new();
             mGameBoard = new Board[mBoardSizeY, mBoardSizeX];
-            SetRandomePlayer();
+            mSetRandomPlayer();
         }
         /// <summary>
         /// Set the defaults and randome the current player
@@ -51,18 +67,18 @@ namespace TTTLogic
         /// <param name="_Y">vertical value</param>
         /// <param name="_X">horizontal value</param>
         /// <returns></returns>
-        public TurnResult PlayerTurn(int _X, int _y) //Forgegeben 
+        public TurnResult PlayerTurn(int _X, int _Y) //Forgegeben 
         {
             //The winner is certain.
             //if (GameIsFinished()) return TurnResult.Invalid;
             if (mGameOver) return TurnResult.Invalid;
             //Check whether coordinates are in the valid area and a blank field.
-            if (IsInBoardRange(_y, _X) && mGameBoard[_y, _X] == Board.Empty)
+            if (IsInBoardRange(_Y, _X) && mGameBoard[_Y, _X] == Board.Empty)
             {
                 //entry the mark.
-                mGameBoard[_y, _X] = CurrentPlayerMark();
+                mGameBoard[_Y, _X] = CurrentPlayerMark();
                 //Check whether a win or draw.
-                if (CurrentPlayerWin())
+                if (mCurrentPlayerWin(_X, _Y))
                 {       
                     mGameOver = true;
                     scoreList.Add(mCurrentPlayer ? TurnResult.WinX : TurnResult.WinO);
@@ -99,7 +115,7 @@ namespace TTTLogic
         /// <returns></returns>
         private bool IsInBoardRange(int _Y, int _X)
         {
-           return ((_Y > -1 && _Y < mBoardSizeY) && (_X > -1 && _X < mBoardSizeX));        
+           return (_Y > -1 && _Y < mBoardSizeY && _X > -1 && _X < mBoardSizeX);        
         }
         /// <summary>
         /// Set all Fields to empty.
@@ -117,57 +133,120 @@ namespace TTTLogic
         /// <summary>
         /// Set mCurrentPlayer random to true or false.
         /// </summary>
-        private void SetRandomePlayer()
+        private void mSetRandomPlayer()
         {
             Random rand = new Random();
-            switch (rand.Next(1, 3))
-            {
-                case 0: mCurrentPlayer = false; break;
-                case 1: mCurrentPlayer = true; break;
-            }
+            mCurrentPlayer = rand.Next() % 2 == 1;
         }
         /// <summary>
         /// Check if the current player has won
         /// </summary>
         /// <returns>bool for player</returns>
-        private bool CurrentPlayerWin()
+        private bool mCurrentPlayerWin(int X, int Y)
         {
             Board _playerMark = CurrentPlayerMark();
-            return (
-                (
-                   mGameBoard[0, 0] == _playerMark//#--
-                && mGameBoard[1, 0] == _playerMark//#--
-                && mGameBoard[2, 0] == _playerMark//#--
-                ) || (
-                   mGameBoard[0, 1] == _playerMark//-#-
-                && mGameBoard[1, 1] == _playerMark//-#-
-                && mGameBoard[2, 1] == _playerMark//-#-
-                ) || (
-                   mGameBoard[0, 2] == _playerMark//--#
-                && mGameBoard[1, 2] == _playerMark//--#
-                && mGameBoard[2, 2] == _playerMark//--#
-                ) || (
-                   mGameBoard[0, 0] == _playerMark//###
-                && mGameBoard[0, 1] == _playerMark//---
-                && mGameBoard[0, 2] == _playerMark//---
-                ) || (
-                   mGameBoard[1, 0] == _playerMark//---
-                && mGameBoard[1, 1] == _playerMark//###
-                && mGameBoard[1, 2] == _playerMark//---
-                ) || (
-                   mGameBoard[2, 0] == _playerMark//---
-                && mGameBoard[2, 1] == _playerMark//---
-                && mGameBoard[2, 2] == _playerMark//###
-                ) || (
-                   mGameBoard[0, 0] == _playerMark//#--
-                && mGameBoard[1, 1] == _playerMark//-#-
-                && mGameBoard[2, 2] == _playerMark//--#
-                ) || (
-                   mGameBoard[0, 2] == _playerMark//--#
-                && mGameBoard[1, 1] == _playerMark//-#-
-                && mGameBoard[2, 0] == _playerMark//#--
-                )
-            );
+
+            bool    NegativeHit   = true;
+            bool    PositiveHit   = true;
+            int     HitCounter    = 0;        //todo drl ausschreiben und negativehitcounter abkürzen
+
+            //vague
+            for (int i = 1; i < mNeedToWin; i++)
+            {
+                //  left
+                if (X - i > -1 && NegativeHit)
+                {
+                    if (mGameBoard[Y, X - i] == _playerMark) //todo beide if sind mit && kombinierbar
+                        HitCounter++;
+                }
+                else NegativeHit = false;
+                //  right
+                if (X + i < mBoardSizeX && PositiveHit)
+                {
+                    if (mGameBoard[Y, X + i] == _playerMark)
+                        HitCounter++;
+                }
+                else PositiveHit = false;
+
+                if (HitCounter + 1 == mNeedToWin) return true;
+            }
+
+
+            NegativeHit = true;
+            PositiveHit = true;
+            HitCounter = 0;
+            for (int i = 1; i < mNeedToWin; i++)
+            {
+                    //----------------------------------------------------------------------------
+                    //  top
+                    if (Y - i > -1 && NegativeHit)
+                {
+                    if (mGameBoard[Y - i, X] == _playerMark)
+                        HitCounter++;
+                }
+                else NegativeHit = false;
+                //  down
+                if (Y + i < mBoardSizeY && PositiveHit)
+                {
+                    if (mGameBoard[Y + i, X] == _playerMark)
+                        HitCounter++;
+                }
+                else PositiveHit = false;
+                //horizontal
+                if (HitCounter + 1  == mNeedToWin) return true;
+            }
+
+            NegativeHit = true;
+            PositiveHit = true;
+            HitCounter = 0;
+
+            for (int i = 1; i < mNeedToWin; i++)
+            {
+
+                //----------------------------------------------------------------------------
+                // top left
+                if (X - i > -1 && Y - i > -1 && NegativeHit)
+                {
+                    if (mGameBoard[Y - i, X - i] == _playerMark)
+                        HitCounter++;
+                }
+                else NegativeHit = false;
+                // down right
+                if (X + i < mBoardSizeY && Y + i < mBoardSizeY && PositiveHit)
+                {
+                    if (mGameBoard[Y + i, X + i] == _playerMark)
+                        HitCounter++;
+                }
+                else PositiveHit = false;
+                //leftTop rightdown
+                if (HitCounter + 1  == mNeedToWin) return true;
+            }
+
+            NegativeHit = true;
+            PositiveHit = true;
+            HitCounter = 0;
+
+            for (int i = 1; i < mNeedToWin; i++)
+            {
+                //----------------------------------------------------------------------------
+                // top right
+                if ( X + i < mBoardSizeY && Y - i > -1 && NegativeHit)
+                {
+                    if (mGameBoard[Y - i, X + i] == _playerMark)
+                        HitCounter++;
+                }
+                else NegativeHit = false;
+                // down left
+                if (X - i > -1 && Y + i < mBoardSizeY && PositiveHit)
+                {
+                    if (mGameBoard[Y + i, X - i] == _playerMark)
+                        HitCounter++;
+                }
+                else PositiveHit = false;
+                //rightTop lefttdown
+                if (HitCounter + 1 == mNeedToWin) return true;
+            }
+            return false;
         }
         /// <summary>
         /// If no field is empty it returns true else false.

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace UIConsole
 {
@@ -46,9 +42,9 @@ namespace UIConsole
         public char boarderVE;//'─'
         public char boarderHO;//'│'
         private Resources()//nur für Singleton
-        { 
+        {
             mainConfig = CreateDefault();
-            SetValues();
+            SetValues(); 
         }
         //Board
         public ConsoleColor BoardColorFront
@@ -140,7 +136,6 @@ namespace UIConsole
             boarderCR = mBoarderList[8];//'┼
             boarderVE = mBoarderList[9];//'─
             boarderHO = mBoarderList[10];//'│
-
         }
         public Config CreateDefault()
         {
@@ -162,8 +157,8 @@ namespace UIConsole
             _return.playerBMarkColorBack = ConsoleColor.DarkRed;
             _return.playerBMarkURL = dirIMG + "FieldB.txt";
 
-            _return.EmptyMarkColorFront = ConsoleColor.Gray;
-            _return.EmptyMarkColorBack = ConsoleColor.DarkGray;
+            _return.EmptyMarkColorFront = ConsoleColor.White;
+            _return.EmptyMarkColorBack = ConsoleColor.Gray;
             _return.EmptyMarkURL = dirIMG + "FieldE.txt";
 
             _return.boarderURL = dirIMG + "Boarder.txt"; ;
@@ -189,7 +184,6 @@ namespace UIConsole
             File.WriteAllText(_dir+ _name+".json", jsonString);
         }
         public Config LoadConfigJson(string _dir) {
-
             var options = new JsonSerializerOptions
             {
                 IncludeFields = true
@@ -198,6 +192,5 @@ namespace UIConsole
             Config _return = JsonSerializer.Deserialize<Config>(jsonString, options);
             return _return;
         }
-
     }
 }

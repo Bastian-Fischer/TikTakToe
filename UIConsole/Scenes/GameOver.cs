@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UIConsole
 {
@@ -57,7 +53,7 @@ namespace UIConsole
                         mLabelList.Add(new Label("GAME "+ (counter + 1) + "  -  Winner: O",winnerCounterY++, Positioning.center,  MainResources.PlayerAColorFront, MainResources.SystemColorBack));
                         break;
                     case (int)TTTLogic.TurnResult.Draw:
-                        mLabelList.Add(new Label( "GAME "+ (counter + 1) + "  -       DRAW",winnerCounterY++, Positioning.center, MainResources.SystemColorFront, MainResources.SystemColorBack));
+                        mLabelList.Add(new Label( "GAME "+ (counter + 1) + "  -      DRAW",winnerCounterY++, Positioning.center, MainResources.SystemColorFront, MainResources.SystemColorBack));
                         break;
                 }
             }

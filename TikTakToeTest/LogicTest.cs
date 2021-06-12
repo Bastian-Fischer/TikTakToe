@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using TTTLogic;
 
@@ -326,6 +327,47 @@ namespace TikTakToeTest
                     }
                 }
                 Assert.IsTrue(different);
+            }
+            //--------------------------------------------------------------------------------------------------
+            // more than 3 x y
+
+            [TestMethod]
+            public void CreateRandomSizedBoard() {
+                Random rand = new Random();
+                int SizeX =rand.Next(3, 11);
+                int SizeY =rand.Next(3, 11);
+                Logic l = new(SizeX, SizeY);
+                Assert.IsTrue(l.GetGameBoard().GetLength(0) == SizeX);
+                Assert.IsTrue(l.GetGameBoard().GetLength(1) == SizeY);
+            }
+            [TestMethod]
+            public void BoardXYNotUnder3(){
+                Logic l = new(2, 2);
+                Assert.IsTrue(l.GetGameBoard().GetLength(0) > 2);
+                Assert.IsTrue(l.GetGameBoard().GetLength(1) > 2);
+            }
+            [TestMethod]
+            public void NeedetToWinNotUnder3() {
+                Logic l = new(5, 5, 1);
+                Assert.IsTrue(l.NeedToWin > 2);
+            }
+            [TestMethod]
+            public void NeedToWinNotBiggerThanSmallestAxis() {
+                Logic l = new(5, 10, 6);
+                Assert.IsTrue(l.NeedToWin <= 5);
+            }
+            [TestMethod]
+            public void BigerSizedBoardIsWinable()
+            {
+                Logic l = new(10, 10, 4);
+
+                for (int i = 0; i < 3; i++)
+                {
+                    l.PlayerTurn(i, 1);
+                    l.PlayerTurn(i, 0);
+                }
+                var turnResult = l.PlayerTurn(3, 1);
+                Assert.IsTrue(turnResult == TurnResult.WinO || turnResult == TurnResult.WinX);
             }
         }
     }

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UIConsole
 {
     class GameScreen : Scene 
     {
-        //protected ClearLayer _clearb = new();
-        // protected ClearLayer _clearl = new();
         protected bool mGameOver = false;
         protected TTTLogic.Logic mGameLogic;
         protected readonly int mFieldStartPosY;
@@ -17,78 +11,66 @@ namespace UIConsole
         protected readonly int mFieldSizeY;
         protected readonly int mFieldSizeX;
         protected readonly int mGameSizeY;
-        protected readonly int mGameSizeX;                      
+        protected readonly int mGameSizeX;
+        protected readonly int mNeedToWin;
         protected ConsoleColor mCurrentCursorColor;
         protected int currentY;
         protected int currentX;
         protected TTTLogic.TurnResult mTurnResult;
         protected Label[,] mFieldList;
         protected Label mBoarder;
-        public GameScreen(int _startY) 
+        public GameScreen(int _startY, int _mGameSizeY , int _mGameSizeX ,int _mNeedToWin) 
         {
-            //mButtonList.Add(_clearb);
-            //mLabelList.Add(_clearl);
             Console.Clear();
-            mGameLogic = new();
-            currentY = 2;
-            currentX = 2;
-            mGameSizeY = 3;
-            mGameSizeX = 3;        
 
+            ;
+            mNeedToWin = _mNeedToWin;
+            currentY = _mGameSizeY / 2 + 1;
+            currentX = _mGameSizeX / 2 + 1;
+            mGameSizeY = _mGameSizeY;
+            mGameSizeX = _mGameSizeX;        
             mFieldSizeY = MainResources.FieldX.Length;
             mFieldSizeX = MainResources.FieldX[0].Length;
             mFieldStartPosY = _startY;
-            mFieldStartPosX =  Console.BufferWidth /2 - (2+(mGameSizeX * mFieldSizeX + 1)/2);
+            mGameLogic = new(mGameSizeY, mGameSizeX, mNeedToWin);
 
+
+            mWindowSizeX = Math.Max( _mGameSizeX * mFieldSizeX + 15, MainResources.TikTakToe[0].Length+15);
+            mWindowSizeY = _mGameSizeY * mFieldSizeY + MainResources.TikTakToe.Length +15;
+            mBufferSizeX = mWindowSizeX;
+            mBufferSizeY = mWindowSizeY;
+            if (OperatingSystem.IsWindows()) WindowSize();
+
+            mFieldStartPosX = (mWindowSizeX) / 2 - ((mGameSizeX)/2 + (mGameSizeX * mFieldSizeX )/2);
+            
             mLabelList.Add(new Label(MainResources.TikTakToe,1, Positioning.center,  MainResources.SystemColorFront, MainResources.SystemColorBack));
             mFieldList = new Label[mGameSizeY, mGameSizeX];
-            StartGame();
+            DrawBoarder();
+            DrawField();
 
+           
         }
         private void StartGame() 
         {
-            mGameLogic = new();
+            if (OperatingSystem.IsWindows()) WindowSize();
+            mGameLogic = new(mGameSizeY, mGameSizeX, mNeedToWin);
             DrawBoarder(); 
             DrawField();          
         }
-        //TODO  alles was mit dem Feld zu schaffen hat, in eine Klasse auslagern.
-        private void FiledFunction() { 
-            
-        
-        
-        
-        }
+
         private void DrawOneField(int _fieldIdY,int _fieldIdX, string[] _fieldText, int _startPosY, int _startPosX, ConsoleColor _forground, ConsoleColor _background) 
         {
             Label _label = new(_startPosY, _startPosX, _fieldText,_forground, _background,true);
             mLabelList.Add(_label);
             mFieldList[_fieldIdY, _fieldIdX] = _label;
-           
-
-            //Console.ForegroundColor = _forground;
-            //Console.BackgroundColor = _background;
-            //string buffer = "";
-            
-            //for (int countY = 0; countY < _field.GetLength(0) ; countY++) 
-            //{
-            //    for (int countX = 0; countX < _field.GetLength(1) ; countX++)
-            //    {
-            //        buffer += (_field[countY, countX]);
-            //    }
-            //    Console.SetCursorPosition(_startX, countY + _startY);
-            //    Console.Write(buffer);
-            //    buffer = "";
-            //}
-            //Console.ResetColor();
         }
         private void DrawField() 
         {
-
             TTTLogic.Board[,] GameBoard = mGameLogic.GetGameBoard();
             int startY;
             int startX;
 
-            mCurrentCursorColor = mGameLogic.GetCurrentPlayer()? MainResources.PlayerBColorFront : MainResources.PlayerAColorFront;
+            mCurrentCursorColor = mGameLogic.GetCurrentPlayer()? MainResources.PlayerBColorBack : MainResources.PlayerAColorBack;
 
             for (int countFY = 0; countFY < mGameSizeY; countFY++)
             {
@@ -141,8 +123,6 @@ namespace UIConsole
         }
         public void DrawBoarder()
         {
-
-            
             Console.Clear();
             //Erstmal nur für 3x3
             int numberOfBoardLines = ((mFieldSizeY+1 )* mGameSizeY)+1;
@@ -192,8 +172,7 @@ namespace UIConsole
                         }
                         if (counterX == mGameSizeX - 1) lineBuffer += MainResources.boarderRB;// am ende ┘
                     }
-                }
-                
+                }              
                 boardBuffer[stepperY++] = lineBuffer;
                 lineBuffer = "";
                 if (counterY < mGameSizeY)
@@ -278,8 +257,7 @@ namespace UIConsole
         public void ResetGame()
         {
             Console.Clear();
-            //_clearb.ReDeaw = true;
-            //_clearl.ReDeaw = true;
+            if (OperatingSystem.IsWindows()) WindowSize();
             mGameOver = false;
             mGameLogic.Reset();
             mBoarder.ReDeaw = true;

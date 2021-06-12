@@ -33,7 +33,6 @@ namespace UIConsole
             get { return mColorBack; }
             set { mColorBack = value; }
         }
-
         public Label(string _text,int _posY, Positioning _pos,  ConsoleColor _front , ConsoleColor _back,bool _mDrawOnce = false ) {
             int bufferWidth = Console.BufferWidth;
             switch (_pos)

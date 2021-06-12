@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UIConsole
 {
     class FramesPerSecond
     {
-
         private DateTime mTickTime;
         private DateTime mLastTickTime;
         private long mTicksCounter;
@@ -19,7 +14,6 @@ namespace UIConsole
         private readonly ConsoleColor front;
         private DateTime start;
         private readonly string name;
-
         public FramesPerSecond(int _Y, int _X, ConsoleColor _back, ConsoleColor _front, string _name= "") 
         {
             mTickTime = DateTime.Now;
@@ -33,7 +27,6 @@ namespace UIConsole
             name = _name;
             if (name != "") name += ": ";
         }
-
         public void ShowFramesPerSecond()
         {
             mTickTime = DateTime.Now;
@@ -58,12 +51,10 @@ namespace UIConsole
         public void HowLongEnd() {
             DateTime now = DateTime.Now;
             int timeTickDifer = (now.Second * 1000 + now.Millisecond) - (start.Second * 1000 + start.Millisecond);
-
-
             Console.ForegroundColor = front;
             Console.BackgroundColor = back;
             Console.SetCursorPosition(x, y);
-            Console.Write(name + timeTickDifer + " Milliseconds");
+            Console.Write("{0} {1,5} Milliseconds",name,timeTickDifer);
             Console.ResetColor();
         }
     }

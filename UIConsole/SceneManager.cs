@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace UIConsole
 {
@@ -18,38 +15,27 @@ namespace UIConsole
             }
         }
         private LinkedList<Scene> mSceneList; //X
-       
-
-
-
         private SceneManager()
         {
             // niemand darf einen SceneManager erstellen, darum Private
             mSceneList = new();
         }
-
         public void Update()//X
         {
             mSceneList.Last.Value.Update();
         }
-
         public void Draw()//X
         {
-            //TODO implement
             mSceneList.Last.Value.Draw();
         }
-
         public void AddScene(Scene SceneToAdd)//X
         {
             mSceneList.AddLast(SceneToAdd);
         }
-
         public void RemoveScene(Scene SceneToRemove)//X
         {
-            //TODO implement
             mSceneList.Remove(SceneToRemove);
         }
-
         public bool SceneListIsEmpty() {
             if(mSceneList.Count == 0) return true;
             else return false;
