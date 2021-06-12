@@ -22,8 +22,6 @@ namespace UIConsole
         public GameScreen(int _startY, int _mGameSizeY , int _mGameSizeX ,int _mNeedToWin) 
         {
             Console.Clear();
-
-            ;
             mNeedToWin = _mNeedToWin;
             currentY = _mGameSizeY / 2 + 1;
             currentX = _mGameSizeX / 2 + 1;
@@ -33,7 +31,6 @@ namespace UIConsole
             mFieldSizeX = MainResources.FieldX[0].Length;
             mFieldStartPosY = _startY;
             mGameLogic = new(mGameSizeY, mGameSizeX, mNeedToWin);
-
 
             mWindowSizeX = Math.Max( _mGameSizeX * mFieldSizeX + 15, MainResources.TikTakToe[0].Length+15);
             mWindowSizeY = _mGameSizeY * mFieldSizeY + MainResources.TikTakToe.Length +15;
@@ -46,16 +43,7 @@ namespace UIConsole
             mLabelList.Add(new Label(MainResources.TikTakToe,1, Positioning.center,  MainResources.SystemColorFront, MainResources.SystemColorBack));
             mFieldList = new Label[mGameSizeY, mGameSizeX];
             DrawBoarder();
-            DrawField();
-
-           
-        }
-        private void StartGame() 
-        {
-            if (OperatingSystem.IsWindows()) WindowSize();
-            mGameLogic = new(mGameSizeY, mGameSizeX, mNeedToWin);
-            DrawBoarder(); 
-            DrawField();          
+            DrawField();    
         }
 
         private void DrawOneField(int _fieldIdY,int _fieldIdX, string[] _fieldText, int _startPosY, int _startPosX, ConsoleColor _forground, ConsoleColor _background) 
